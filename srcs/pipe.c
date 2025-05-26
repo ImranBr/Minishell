@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 16:40:59 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/05/26 22:30:16 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/05/27 00:36:33 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,11 @@ void    syntax_pipe(char *input)
     i = ft_strlen(input) - 1;
     if (input[i] == '|')
         ft_putendl_fd("bash: syntax error: unexpected end of file", STDERR_FILENO);
+    i = 0;
+    while (input[i])
+    {
+        if(input[i] == '|' && input[i + 1] == '|')
+            ft_putendl_fd("syntax error near unexpected token `|'", STDERR_FILENO);
+        i++;
+    }
 }
