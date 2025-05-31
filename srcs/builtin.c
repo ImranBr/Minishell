@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 17:06:23 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/05/31 17:00:34 by ibarbouc         ###   ########.fr       */
+/*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
+/*   Updated: 2025/05/31 16:50:35 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main(int ac, char **av)
+int builtin_pwd()
 {
-    (void)ac;
-    (void)av;
-
-    char *input;
-    input = NULL;
-    
-    while (1)
+    char *cwd;
+    cwd = getcwd(NULL, 0);
+    if (!cwd)
     {
-        input = readline("minishell : ");
-        if(!input)
-            break;        
-        add_history(input);
-        if (ft_strncmp(input, "pwd", 4) == 0)
-            builtin_pwd();
-        syntax_pipe(input);
-        free(input);
+        perror("pwd");
+        return (1);
     }
-    rl_clear_history();
-    return 0;
+    printf("%s\n", cwd);
+    free(cwd);
+    return (0);
 }

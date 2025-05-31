@@ -6,9 +6,10 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
-# include <unistd.h>
 # include <stdlib.h>
+# include <unistd.h>
 
-void    syntax_pipe(char *input);
+void	syntax_pipe(char *input);
+int		builtin_pwd(void);
 
 #endif
