@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/01 18:52:20 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/01 19:09:36 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int builtin_echo(char **args)
     
     i = 1;
     newline = 1;
+    
     if (args[i] && ft_strncmp(args[i], "-n", 3) == 0)
     {
         newline = 0;
