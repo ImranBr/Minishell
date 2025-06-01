@@ -9,7 +9,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-void	syntax_pipe(char *input);
+int		builtin_env(char **env);
 int		builtin_pwd(void);
+void	syntax_pipe(char *input);
 
 #endif
