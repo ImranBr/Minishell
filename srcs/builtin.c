@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/05/31 19:40:57 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:52:20 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,29 @@ int builtin_env(char **env)
         printf("%s\n", env[i]);
         i++;
     }
+    return (0);
+}
+
+int builtin_echo(char **args)
+{
+    int i;
+    int newline;
+    
+    i = 1;
+    newline = 1;
+    if (args[i] && ft_strncmp(args[i], "-n", 3) == 0)
+    {
+        newline = 0;
+        i++;
+    }
+    while (args[i])
+    {
+        printf("%s", args[i]);
+        if (args[i + 1])
+            printf(" ");
+        i++;
+    }
+    if (newline)
+        printf("\n");
     return (0);
 }

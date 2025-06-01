@@ -8,9 +8,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <string.h>
 
 int		builtin_env(char **env);
 int		builtin_pwd(void);
 void	syntax_pipe(char *input);
+int     builtin_echo(char **args);
 
 #endif
