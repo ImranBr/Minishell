@@ -9,6 +9,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <linux/limits.h>
 
 int		builtin_env(char **env);
 int		builtin_pwd(void);

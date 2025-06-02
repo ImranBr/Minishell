@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/01 20:41:13 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:42:50 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 int	builtin_pwd(void)
 {
-	char	*cwd;
+	// char *cwd;
+	char	cwd[PATH_MAX];
 
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-	{
-		perror("pwd");
-		return (1);
-	}
+	// cwd = getcwd(NULL, 0);
+	getcwd(cwd, sizeof(cwd));
+	// if (!cwd)
+	// {
+		// perror("pwd");
+		// return (1);
+	// }
 	printf("%s\n", cwd);
-	free(cwd);
+	// free(cwd);
 	return (0);
 }
 
@@ -47,7 +49,7 @@ int	builtin_echo(char **args)
 
 	i = 1;
 	newline = 1;
-	if (args[i] && ft_strncmp(args[i], "-n", 3) == 0)
+	if (args[i] && ft_strncmp(args[i], "-n", 5) == 0)
 	{
 		newline = 0;
 		i++;
@@ -64,22 +66,3 @@ int	builtin_echo(char **args)
 	return (0);
 }
 
-int	builtin_cd(char **args)
-{
-	if (!args[1])
-	{
-		ft_putendl_fd("cd: missing argument", STDERR_FILENO);
-		return (1);
-	}
-	if (args[2])
-	{
-		ft_putendl_fd("cd: too many arguments", STDERR_FILENO);
-		return (1);
-	}
-	if (chdir(args[1]) != 0)
-	{
-		perror("cd");
-		return (1);
-	}
-	return (0);
-}
