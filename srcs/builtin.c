@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/02 21:42:50 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/03 01:00:03 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	builtin_pwd(void)
 	getcwd(cwd, sizeof(cwd));
 	// if (!cwd)
 	// {
-		// perror("pwd");
-		// return (1);
+	// 	perror("pwd");
+	// 	return (1);
 	// }
 	printf("%s\n", cwd);
 	// free(cwd);
@@ -65,4 +65,3 @@ int	builtin_echo(char **args)
 		printf("\n");
 	return (0);
 }
-
