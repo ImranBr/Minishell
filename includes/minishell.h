@@ -15,6 +15,8 @@ int		builtin_env(char **env);
 int		builtin_pwd(void);
 void	syntax_pipe(char *input);
 int		builtin_echo(char **args);
-int		builtin_cd(char **args);
+// int		builtin_cd(char **args);
+int are_double_quotes_closed(char *input);
+int are_single_quotes_closed(char *input);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:06:23 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/02 21:36:48 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/04 11:59:41 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,12 @@ int	main(int ac, char **av, char **env)
 	}
 	rl_clear_history();
 	return (0);
+}
+
+int main()
+{
+    char *s1 = "ceci 'est \"un test";
+    char *s2 = "ceci est un test'";
+    printf("s1 single quotes = %d\ns1 double quotes = %d\n", are_single_quotes_closed(s1), are_double_quotes_closed(s1));
+    printf("s2 single quotes = %d\ns2 double quotes = %d\n", are_single_quotes_closed(s2), are_double_quotes_closed(s2));
 }
