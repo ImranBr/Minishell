@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/05 07:44:48 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/08 17:14:36 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,38 @@
 # include <string.h>
 # include <unistd.h>
 
-            //builtin
+// structure qui comporte:
+
+// list = type de variable pour contenir
+//          ex. char **, linked list avec char * dedans ou quoi
+
+// structure qui comporte une list des commande qui soit une structure elle meme qui comporte tous ce dont elle a besoin
+//
+
+// minishell: ls -l -o | wc -l | prout -1
+
+// struc->cmdName == ls
+// struc->args[0] == -l
+// struc->args[1] == -o
+// struc = struc->next
+// struc->cmdName == wc
+// struc->args[0] == -l
+// struc->args[1] == existe pas
+// struc = struc->next
+// struc->cmdName == prout
+
+// builtin
 int		builtin_echo(char **args);
 int		builtin_env(char **env);
 int		builtin_pwd(void);
-// int		builtin_cd(char **args);
-
-            // caracteres
+int		builtin_cd(char **args);
+// caracteres
 int		are_double_quotes_closed(char *input);
 int		are_single_quotes_closed(char *input);
+int		is_special_char(char c);
 void	neutralize_special_char_in_double_quote(char *input);
 void	neutralize_special_char_in_single_quote(char *input);
-            // syntax
-void	syntax_pipe(char *input);
+// syntax
+void	syntax_special_char(char *input);
+
 #endif
