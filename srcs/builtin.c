@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/04 13:21:49 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/09 22:37:18 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,3 +65,52 @@ int	builtin_echo(char **args)
 		printf("\n");
 	return (0);
 }
+void	error_cd(void)
+{
+	static char	*oldpwd;
+	char		*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!oldpwd)
+	{
+		printf("oldpwd not set");
+		free(cwd);
+		return ;
+	}
+	printf("%s\n", oldpwd);
+	if (chdir(oldpwd) == -1)
+	{
+		perror("cd");
+		free(cwd);
+		return ;
+	}
+	free(cwd);
+	return ;
+}
+void	ft_cd(char *path)
+{
+	static char	*oldpwd;
+	char		*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (!path || !path[0])
+	{
+		path = getenv("HOME");
+		if (!path)
+			return(printf("HOME not set"), free(cwd));
+	}
+	else if (strcmp(path, "-") == 0)
+		error_cd();
+	if (chdir(path) == -1)
+	{
+		perror("cd");
+		free(cwd);
+		return ;
+	}
+	if (oldpwd)
+		free(oldpwd);
+	oldpwd = cwd;
+	free(cwd);
+}
+
+

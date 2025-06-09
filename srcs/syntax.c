@@ -6,11 +6,16 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 16:40:59 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/08 17:14:12 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/09 19:01:22 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_special_char(char c)
+{
+	return (c == '|' || c == '&' || c == ';' || c == '>' || c == '<');
+}
 
 void	token_error(char c)
 {

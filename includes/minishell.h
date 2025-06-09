@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/08 17:14:36 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/09 21:33:20 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+#include <errno.h>
+#include <limits.h>
+#include <stdbool.h>
 
 // structure qui comporte:
 
@@ -47,7 +50,8 @@
 int		builtin_echo(char **args);
 int		builtin_env(char **env);
 int		builtin_pwd(void);
-int		builtin_cd(char **args);
+// int		builtin_cd(char **args);
+void    ft_cd(char *path);
 // caracteres
 int		are_double_quotes_closed(char *input);
 int		are_single_quotes_closed(char *input);

@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:06:23 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/07 17:30:45 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/09 21:43:02 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	main(int ac, char **av, char **env)
 			builtin_env(env);
 		if (ft_strncmp(args[0], "echo", 5) == 0)
 			builtin_echo(args);
+		if (ft_strncmp(args[0], "cd", 3) == 0)
+			ft_cd(input + 3);
 		syntax_special_char(input);
 		free(input);
 		free_split(args);
