@@ -6,13 +6,13 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:06:23 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/09 21:43:02 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:18:00 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **envp)
 {
 	char	*input;
 	char	**args;
@@ -43,14 +43,7 @@ int	main(int ac, char **av, char **env)
 		}
 		neutralize_special_char_in_double_quote(input);
 		neutralize_special_char_in_single_quote(input);
-		if (ft_strncmp(args[0], "pwd", 4) == 0)
-			builtin_pwd();
-		if (ft_strncmp(args[0], "env", 4) == 0)
-			builtin_env(env);
-		if (ft_strncmp(args[0], "echo", 5) == 0)
-			builtin_echo(args);
-		if (ft_strncmp(args[0], "cd", 3) == 0)
-			ft_cd(input + 3);
+		exec_builtin(args, envp);
 		syntax_special_char(input);
 		free(input);
 		free_split(args);

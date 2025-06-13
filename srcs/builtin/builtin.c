@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/09 22:37:18 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:17:22 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	builtin_pwd(void)
 	return (0);
 }
 
-int	builtin_env(char **env)
+int	builtin_env(char **envp)
 {
 	int	i;
 
 	i = 0;
-	while (env && env[i])
+	while (envp && envp[i])
 	{
-		printf("%s\n", env[i]);
+		printf("%s\n", envp[i]);
 		i++;
 	}
 	return (0);
@@ -65,6 +65,7 @@ int	builtin_echo(char **args)
 		printf("\n");
 	return (0);
 }
+
 void	error_cd(void)
 {
 	static char	*oldpwd;
@@ -87,6 +88,7 @@ void	error_cd(void)
 	free(cwd);
 	return ;
 }
+
 void	ft_cd(char *path)
 {
 	static char	*oldpwd;
@@ -97,10 +99,10 @@ void	ft_cd(char *path)
 	{
 		path = getenv("HOME");
 		if (!path)
-			return(printf("HOME not set"), free(cwd));
+			return (printf("HOME not set"), free(cwd), free(oldpwd));
 	}
 	else if (strcmp(path, "-") == 0)
-		error_cd();
+		return (error_cd());
 	if (chdir(path) == -1)
 	{
 		perror("cd");
@@ -112,5 +114,3 @@ void	ft_cd(char *path)
 	oldpwd = cwd;
 	free(cwd);
 }
-
-
