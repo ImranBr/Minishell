@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:10:02 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/13 16:27:02 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:31:11 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,3 +28,17 @@ char	*get_env_value(char *name, t_env *env_list)
 	return (NULL);
 }
 
+t_env	create_env_list(char **envp)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	j = 0;
+	while (envp[i])
+	{
+		i++;
+		while (envp[j] != '=')
+			j++;
+	}
+}

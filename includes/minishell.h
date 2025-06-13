@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/13 16:20:01 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:33:37 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,27 @@ typedef struct s_env
 // struc = struc->next
 // struc->cmdName == prout
 
+// expand
+char				*get_env_value(char *name, t_env *env_list);
+t_env				create_env_list(char **envp);
+
 // builtin
 int					builtin_echo(char **args);
 int					builtin_env(char **envp);
 int					builtin_pwd(void);
 void				ft_cd(char *path);
 void				exec_builtin(char **args, char **env);
+
 // caracteres
 int					are_double_quotes_closed(char *input);
 int					are_single_quotes_closed(char *input);
 int					is_special_char(char c);
 void				neutralize_special_char_in_double_quote(char *input);
 void				neutralize_special_char_in_single_quote(char *input);
+
 // syntax
 void				syntax_special_char(char *input);
+
 // utils
 int					ft_strcmp(char *s1, char *s2);
 
