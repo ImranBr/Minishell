@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/13 16:17:22 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:07:47 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,20 @@ int	builtin_pwd(void)
 	return (0);
 }
 
-int	builtin_env(char **envp)
+int	builtin_env(t_env *env_list)
 {
-	int	i;
+	t_env	*tmp;
 
-	i = 0;
-	while (envp && envp[i])
+	tmp = env_list;
+	// pointeur tmp quon initialise avec la tete de la liste
+	while (tmp)
 	{
-		printf("%s\n", envp[i]);
-		i++;
+		if (tmp->value)
+			// si variable a une valeur,on affiche son nom et sa valur
+			printf("%s=%s\n", tmp->name, tmp->value);
+		else // sinon on affiche uniquement son nom
+			printf("%s\n", tmp->name);
+		tmp = tmp->next;
 	}
 	return (0);
 }
