@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/13 21:02:33 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/14 13:30:30 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ void				syntax_special_char(char *input);
 
 // utils
 int					ft_strcmp(char *s1, char *s2);
+t_env				*free_list(t_env *a);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 21:24:57 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/04/18 21:22:58 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/14 13:21:02 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_node
 	struct s_node	*next;
 }					t_node;
 
-t_node				*free_list(t_node *a);
+// t_node				*free_list(t_node *a);
 void				free_split(char **split);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);

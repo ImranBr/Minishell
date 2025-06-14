@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:06:23 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/13 21:05:07 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/14 14:18:50 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int ac, char **av, char **envp)
 	input = NULL;
 	args = NULL;
 	env_list = create_env_list(envp);
-	// builtin_env(env_list);
 	while (1)
 	{
 		input = readline("minishell : ");
@@ -50,6 +49,7 @@ int	main(int ac, char **av, char **envp)
 		syntax_special_char(input);
 		free(input);
 		free_split(args);
+		free_list(env_list);
 	}
 	rl_clear_history();
 	return (0);

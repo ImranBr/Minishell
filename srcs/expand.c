@@ -6,27 +6,28 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:10:02 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/13 21:07:10 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/14 17:21:53 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// char	*get_env_value(char *name, t_env *env_list)
-// {
-// 	t_env	*current;
+char	*get_env_value(char *name, t_env *env_list)
+{
+	t_env	*current;
 
-// 	if (!name || !env_list)
-// 		return (NULL);
-// 	current = env_list;
-// 	while (current)
-// 	{
-// 		if (current->name && ft_strcmp(current->name, name) == 0)
-// 			return (current->value);
-// 		current = current->next;
-// 	}
-// 	return (NULL);
-// }
+	if (!name || !env_list)
+		return (NULL);
+	current = env_list;
+	while (current)
+	{
+		if (current->name && ft_strcmp(current->name, name) == 0)
+			return (current->value);
+		current = current->next;
+	}
+	return (NULL);
+}
+
 void	add_env_node(t_env **env_list, char *name, char *value)
 {
 	t_env	*new_node;
@@ -76,4 +77,31 @@ t_env	*create_env_list(char **envp)
 		i++;
 	}
 	return (env_list);
+}
+
+char *expand_variables(char *input, t_env *env_list, int exit_status)
+{
+	int	i;
+	int	in_single_quote;
+	int in_double_quote;
+	char *result;
+
+	i = 0;
+	in_single_quote = 0;
+	in_double_quote = 0;
+	result = NULL;
+	while (input[i])
+	{
+    	if (input[i] == '\'' && !in_double_quote)
+        	in_single_quote = !in_single_quote;
+    	else if (input[i] == '\"' && !in_single_quote)
+        	in_double_quote = !in_double_quote;
+		if (!in_single_quote && input[i] == '$')
+		{
+			if (input[i + 1] == '?')
+				return ();
+		}
+		i++;
+	}
+	return (result);
 }

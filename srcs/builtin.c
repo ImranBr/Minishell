@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/13 21:07:47 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:06:59 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,3 +119,4 @@ void	ft_cd(char *path)
 	oldpwd = cwd;
 	free(cwd);
 }
+
