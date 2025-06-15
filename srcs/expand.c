@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:10:02 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/15 16:43:12 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/15 17:05:55 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,20 @@ int	is_valid_var_char(char c)
 
 int	extract_var_name(char *input, int start_index, char *var_name_buffer)
 {
-	
+	int i;
+
+	i = 0;
+	if (input[start_index] == '?')
+	{
+		var_name_buffer[0] = '?';
+		var_name_buffer[1] = '\0';
+		return (1);
+	}
+	while (is_valid_var_char(input[start_index + i]))
+	{
+		var_name_buffer[i] = input[start_index + i];
+		i++;
+	}
+	var_name_buffer[i] = '\0';
+	return (i);
 }
