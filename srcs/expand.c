@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:10:02 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/13 21:07:10 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/15 16:43:12 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 // 	}
 // 	return (NULL);
 // }
+
 void	add_env_node(t_env **env_list, char *name, char *value)
 {
 	t_env	*new_node;
@@ -76,4 +77,34 @@ t_env	*create_env_list(char **envp)
 		i++;
 	}
 	return (env_list);
+}
+
+char	*expand_variables(char *input, t_env *env_list, int exit_status)
+{
+	int		i;
+	int		in_single_quote;
+	int		in_double_quote;
+	char	*result;
+
+	i = 0;
+	in_single_quote = 0;
+	in_double_quote = 0;
+	while (input[i])
+	{
+		if (input[i] == '\'' && !in_double_quote)
+			in_single_quote = !in_single_quote;
+		else if (input[i] == '\"' && !in_single_quote)
+			in_double_quote = !in_double_quote;
+	}
+	return (result);
+}
+
+int	is_valid_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_');
+}
+
+int	extract_var_name(char *input, int start_index, char *var_name_buffer)
+{
+	
 }

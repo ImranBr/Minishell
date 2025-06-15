@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 21:24:57 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/04/18 21:22:58 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/15 16:07:48 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_node				*free_list(t_node *a);
 void				free_split(char **split);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
-int					ft_isalnum(int c);
+int					ft_isalnum(char c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
 size_t				ft_strlen(const char *s);
