@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 19:54:53 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/15 20:47:48 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/15 21:51:22 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,9 @@ t_env	*add_or_replace(t_env *env, char *cmd)
 		found->value = value;
 		return (env);
 	}
-	find_env_node(env, name);
+    else
+        add_env_node(&env, name, value);
+    find_env_node(env, name);
     free(value);
     free(name);
 	return (env);
