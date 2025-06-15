@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 19:54:53 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/16 00:18:27 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:27:42 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	is_valid_exp(char *cmd)
 {
 	int	i;
-	char *name;
 
 	if (!cmd || !cmd[0])
 		return (0);
@@ -38,16 +37,6 @@ int	is_valid_exp(char *cmd)
 		}
 		i++;
 	}
-	name = ft_substr(cmd, 0, i); // isoler le nom pour comparaison
-	if (name && (ft_strcmp(name, "export") == 0 || ft_strcmp(name, "unset") == 0))
-	{
-		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
-		ft_putstr_fd(name, STDERR_FILENO);
-		ft_putstr_fd("': reserved keyword\n", STDERR_FILENO);
-		free(name);
-		return (0);
-	}
-	free(name);
 	return (1);
 }
 
@@ -62,7 +51,7 @@ t_env	*find_env_node(t_env *env, char *name)
 	return (NULL);
 }
 
-t_env	*add_or_replace(t_env *env, char *cmd)
+void	add_or_replace(t_env **env, char *cmd)
 {
 	t_env	*found;
 	char	*name;
@@ -75,25 +64,19 @@ t_env	*add_or_replace(t_env *env, char *cmd)
 		i++;
 	name = ft_substr(cmd, 0, i);
 	if (!name)
-		return (env);
+		return ;
 	if (cmd[i] == '=')
 		value = ft_strdup(&cmd[i + 1]);
-	found = find_env_node(env, name);
+	found = find_env_node(*env, name);
 	if (found)
 	{
 		free(found->value);
-		found->value = value ? ft_strdup(value) : NULL;
+		found->value = value;
 		free(name);
-		free(value); // on libère value même si NULL, car dupliqué juste avant
-		return (env);
+		return ;
 	}
-	else
-	{
-		add_env_node(&env, ft_strdup(name), value ? ft_strdup(value) : NULL);
-		free(name);
-		free(value);
-	}
-	return (env);
+    else
+        add_env_node(env, name, value);
 }
 
 void	export_sorted(char **env_cpy, int len_env)
@@ -203,7 +186,7 @@ int		builtin_export(t_env *env_list, char **cmd)
 		while (cmd[i])
 		{
 			if (is_valid_exp(cmd[i]))
-				env_list = add_or_replace(env_list, cmd[i]);
+				add_or_replace(&env_list, cmd[i]);
 			i++;
 		}
 	}
