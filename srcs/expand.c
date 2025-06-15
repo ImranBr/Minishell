@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:10:02 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/15 20:04:11 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/16 00:15:09 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,11 @@ void	add_env_node(t_env **env_list, char *name, char *value)
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return ;
-	new_node->name = name;
-	new_node->value = value;
+	new_node->name = ft_strdup(name);
+	if (value)
+		new_node->value = ft_strdup(value);
+	else
+		new_node->value = NULL;
 	new_node->next = NULL;
 	if (*env_list == NULL)
 		*env_list = new_node;
@@ -48,6 +51,8 @@ void	add_env_node(t_env **env_list, char *name, char *value)
 			tmp = tmp->next;
 		tmp->next = new_node;
 	}
+	free(name);
+	free(value);
 }
 
 t_env	*create_env_list(char **envp)
