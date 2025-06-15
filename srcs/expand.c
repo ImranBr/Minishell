@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:10:02 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/15 17:05:55 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:04:11 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,47 +79,52 @@ t_env	*create_env_list(char **envp)
 	return (env_list);
 }
 
-char	*expand_variables(char *input, t_env *env_list, int exit_status)
-{
-	int		i;
-	int		in_single_quote;
-	int		in_double_quote;
-	char	*result;
+// char	*expand_variables(char *input, t_env *env_list, int exit_status)
+// {
+// 	int		i;
+// 	int		in_single_quote;
+// 	int		in_double_quote;
+// 	char	*result;
 
-	i = 0;
-	in_single_quote = 0;
-	in_double_quote = 0;
-	while (input[i])
-	{
-		if (input[i] == '\'' && !in_double_quote)
-			in_single_quote = !in_single_quote;
-		else if (input[i] == '\"' && !in_single_quote)
-			in_double_quote = !in_double_quote;
-	}
-	return (result);
-}
+// 	i = 0;
+// 	in_single_quote = 0;
+// 	in_double_quote = 0;
+// 	while (input[i])
+// 	{
+// 		if (input[i] == '\'' && !in_double_quote)
+// 			in_single_quote = !in_single_quote;
+// 		else if (input[i] == '\"' && !in_single_quote)
+// 			in_double_quote = !in_double_quote;
+// 	}
+// 	return (result);
+// }
 
-int	is_valid_var_char(char c)
-{
-	return (ft_isalnum(c) || c == '_');
-}
+// int	is_valid_var_char(char c)
+// {
+// 	return (ft_isalnum(c) || c == '_');
+// }
 
-int	extract_var_name(char *input, int start_index, char *var_name_buffer)
-{
-	int i;
+// int	extract_var_name(char *input, int start_index, char *var_name_buffer)
+// {
+// 	int i;
 
-	i = 0;
-	if (input[start_index] == '?')
-	{
-		var_name_buffer[0] = '?';
-		var_name_buffer[1] = '\0';
-		return (1);
-	}
-	while (is_valid_var_char(input[start_index + i]))
-	{
-		var_name_buffer[i] = input[start_index + i];
-		i++;
-	}
-	var_name_buffer[i] = '\0';
-	return (i);
-}
+// 	i = 0;
+// 	if (input[start_index] == '?')
+// 	{
+// 		var_name_buffer[0] = '?';
+// 		var_name_buffer[1] = '\0';
+// 		return (1);
+// 	}
+// 	while (is_valid_var_char(input[start_index + i]))
+// 	{
+// 		var_name_buffer[i] = input[start_index + i];
+// 		i++;
+// 	}
+// 	var_name_buffer[i] = '\0';
+// 	return (i);
+// }
+
+// char	*expand_dollar(char *input, t_env *env_list, int exit_status)
+// {
+	
+// }

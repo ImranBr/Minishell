@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:06:23 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/13 21:05:07 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:36:33 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ int	main(int ac, char **av, char **envp)
 		free_split(args);
 	}
 	rl_clear_history();
+	free_list(env_list);
 	return (0);
 }

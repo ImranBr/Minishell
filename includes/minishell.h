@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/13 21:02:33 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:32:33 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_data
+{
+	t_env			*env;
+}					t_data;
 // structure qui comporte:
 
 // list = type de variable pour contenir
@@ -55,7 +59,7 @@ typedef struct s_env
 // struc->cmdName == prout
 
 // expand
-char				*get_env_value(char *name, t_env *env_list);
+// char				*get_env_value(char *name, t_env *env_list);
 t_env				*create_env_list(char **envp);
 
 // builtin
@@ -64,6 +68,7 @@ int					builtin_env(t_env *env_list);
 int					builtin_pwd(void);
 void				ft_cd(char *path);
 void				exec_builtin(char **args, t_env *env_list);
+int					builtin_export(t_env *env_list, char **cmd);
 
 // caracteres
 int					are_double_quotes_closed(char *input);
@@ -77,5 +82,6 @@ void				syntax_special_char(char *input);
 
 // utils
 int					ft_strcmp(char *s1, char *s2);
+t_env	*free_list(t_env *a);
 
 #endif
