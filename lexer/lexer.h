@@ -6,7 +6,7 @@
 /*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:07:31 by joudafke          #+#    #+#             */
-/*   Updated: 2025/06/15 19:11:32 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/06/15 23:26:22 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,11 @@ typedef struct s_token
 	char			*value;
 	struct s_token	*next;
 }					t_token;
+
+int		is_space(char c);
+int		is_operator(char c);
+t_token	*create_token(t_token_type token_type, char *value);
+void	add_token(t_token **token_list, t_token *new_token);
+void	free_tokens(t_token *token_list);
 
 #endif
