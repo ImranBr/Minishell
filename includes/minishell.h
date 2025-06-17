@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/15 21:48:31 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/17 21:32:43 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_data
 // char				*get_env_value(char *name, t_env *env_list);
 t_env				*create_env_list(char **envp);
 void	add_env_node(t_env **env_list, char *name, char *value);
+char *expand_variables(char *input, t_env *env_list, int exit_status);
 
 // builtin
 int					builtin_echo(char **args);
