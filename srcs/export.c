@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 19:54:53 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/16 00:33:33 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:34:25 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	add_or_replace(t_env **env, char *cmd)
 		free(name);
 		return ;
 	}
-    else
-        add_env_node(env, name, value);
+	else
+		add_env_node(env, name, value);
 }
 
 void	export_sorted(char **env_cpy, int len_env)
@@ -164,12 +164,12 @@ void	print_export(char **env_cpy)
 	}
 }
 
-int		builtin_export(t_env *env_list, char **cmd)
+int	builtin_export(t_env *env_list, char **cmd)
 {
-	int	i;
-	int len;
-	char **cpy_env;
-	
+	int		i;
+	int		len;
+	char	**cpy_env;
+
 	i = 1;
 	len = 0;
 	if (!cmd[1])

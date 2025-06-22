@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/17 21:32:43 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:52:39 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,23 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-typedef struct s_data
+typedef struct s_expand
 {
-	t_env			*env;
-}					t_data;
-// structure qui comporte:
-
-// list = type de variable pour contenir
-//          ex. char **, linked list avec char * dedans ou quoi
-
-// structure qui comporte une list des commande qui soit une structure elle meme
-// qui comporte tous ce dont elle a besoin
-//
-
-// minishell: ls -l -o | wc -l | prout -1
-
-// struc->cmdName == ls
-// struc->args[0] == -l
-// struc->args[1] == -o
-// struc = struc->next
-// struc->cmdName == wc
-// struc->args[0] == -l
-// struc->args[1] == existe pas
-// struc = struc->next
-// struc->cmdName == prout
+	char			*result;
+	char			*tmp;
+	char			*expanded;
+	char			temp[2];
+	int				i;
+	int				in_single_quote;
+	int				in_double_quote;
+}					t_expand;
 
 // expand
-// char				*get_env_value(char *name, t_env *env_list);
 t_env				*create_env_list(char **envp);
-void	add_env_node(t_env **env_list, char *name, char *value);
-char *expand_variables(char *input, t_env *env_list, int exit_status);
+void				add_env_node(t_env **env_list, char *name, char *value);
+char				*expand_variables(char *input, t_env *env_list,
+						int exit_status);
+char				*get_env_value(char *name, t_env *env_list);
 
 // builtin
 int					builtin_echo(char **args);
@@ -71,6 +58,8 @@ int					builtin_pwd(void);
 void				ft_cd(char *path);
 void				exec_builtin(char **args, t_env *env_list);
 int					builtin_export(t_env *env_list, char **cmd);
+void				builtin_exit(char **args);
+t_env				*builtin_unset(t_env *env, char *cmd);
 
 // caracteres
 int					are_double_quotes_closed(char *input);
@@ -84,6 +73,6 @@ void				syntax_special_char(char *input);
 
 // utils
 int					ft_strcmp(char *s1, char *s2);
-t_env	*free_list(t_env *a);
+t_env				*free_list(t_env *a);
 
 #endif
