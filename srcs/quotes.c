@@ -6,52 +6,39 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 11:44:19 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/04 14:18:31 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:50:51 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	are_single_quotes_closed(char *input)
+int	is_quote_closed(char *input)
 {
-	int	i;
-	int	count;
+	int		i;
+	char	first_quote;
+	int		open;
 
 	i = 0;
-	count = 0;
+	first_quote = 0;
+	open = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'')
-			count++;
+		if (!first_quote && (input[i] == '\'' || input[i] == '\"'))
+		{
+			first_quote = input[i];
+			open = 1;
+		}
+		else if (input[i] == first_quote)
+			open = !open;
 		i++;
 	}
-	if (count % 2 != 0)
+	if (open)
 	{
-		ft_putendl_fd("syntax error: unclosed single quote", 2);
+		if (first_quote == '\'')
+			ft_putendl_fd("syntax error: unclosed single quote", STDERR_FILENO);
+		else if (first_quote == '\"')
+			ft_putendl_fd("syntax error: unclosed double quote", STDERR_FILENO);
 		return (1);
 	}
-	else
-		return (0);
-}
-
-int	are_double_quotes_closed(char *input)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (input[i])
-	{
-		if (input[i] == '\"')
-			count++;
-		i++;
-	}
-	if (count % 2 != 0)
-	{
-		ft_putendl_fd("syntax error: unclosed double quote", 2);
-		return (1);
-	}
-	else
-		return (0);
+	return (0);
 }

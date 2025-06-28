@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 12:46:26 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/09 21:41:10 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/28 12:24:06 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	neutralize_special_char_in_single_quote(char *input)
 			input[i] *= -1;
 		i++;
 	}
-	printf("BUFFER : %s\n", input);
 }
 
 void	neutralize_special_char_in_double_quote(char *input)
@@ -41,7 +40,7 @@ void	neutralize_special_char_in_double_quote(char *input)
 	quote = 0;
 	while (input[i])
 	{
-		if (!quote && input[i] == '"')
+		if (!quote && input[i] == '\"')
 			quote = input[i];
 		else if (quote && input[i] == quote)
 			quote = 0;

@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/22 18:52:39 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/28 12:09:45 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef enum e_quote_state
+{
+	NO_QUOTE,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+}					t_quote_state;
+
 typedef struct s_expand
 {
 	char			*result;
@@ -42,7 +49,9 @@ typedef struct s_expand
 	int				i;
 	int				in_single_quote;
 	int				in_double_quote;
+	t_quote_state	quote;
 }					t_expand;
+
 
 // expand
 t_env				*create_env_list(char **envp);
@@ -56,14 +65,13 @@ int					builtin_echo(char **args);
 int					builtin_env(t_env *env_list);
 int					builtin_pwd(void);
 void				ft_cd(char *path);
-void				exec_builtin(char **args, t_env *env_list);
+void				exec_builtin(char **args, t_env *env_list, char *input);
 int					builtin_export(t_env *env_list, char **cmd);
-void				builtin_exit(char **args);
+void				builtin_exit(t_env *env_list, char **args, char *input);
 t_env				*builtin_unset(t_env *env, char *cmd);
 
-// caracteres
-int					are_double_quotes_closed(char *input);
-int					are_single_quotes_closed(char *input);
+// caracteres & quotes
+int					is_quote_closed(char *input);
 int					is_special_char(char c);
 void				neutralize_special_char_in_double_quote(char *input);
 void				neutralize_special_char_in_single_quote(char *input);

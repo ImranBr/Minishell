@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:10:02 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/22 00:57:41 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/28 14:33:54 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,20 @@ char	*expand_variables(char *input, t_env *env_list, int exit_status)
 {
 	t_expand	exp;
 
+	exp.quote = NO_QUOTE;
 	exp.i = 0;
-	exp.in_single_quote = 0;
-	exp.in_double_quote = 0;
 	exp.result = ft_strdup("");
-
 	while (input[exp.i])
 	{
-		if (input[exp.i] == '\'' && !exp.in_double_quote)
-			exp.in_single_quote = !exp.in_single_quote;
-		else if (input[exp.i] == '"' && !exp.in_single_quote)
-			exp.in_double_quote = !exp.in_double_quote;
-		else if (input[exp.i] == '$' && !exp.in_single_quote)
+		if (input[exp.i] == '\'' && exp.quote == NO_QUOTE)
+			exp.quote = SINGLE_QUOTE;
+		else if (input[exp.i] == '\'' && exp.quote == SINGLE_QUOTE)
+			exp.quote = NO_QUOTE;
+		else if (input[exp.i] == '"' && exp.quote == NO_QUOTE)
+			exp.quote = DOUBLE_QUOTE;
+		else if (input[exp.i] == '"' && exp.quote == DOUBLE_QUOTE)
+			exp.quote = NO_QUOTE;
+		else if (input[exp.i] == '$' && exp.quote != SINGLE_QUOTE)
 		{
 			exp.expanded = expand_dollar(input, &exp.i, env_list, exit_status);
 			exp.tmp = exp.result;

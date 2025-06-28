@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:06:23 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/22 18:55:08 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/28 12:44:10 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	main(int ac, char **av, char **envp)
 		if (!input)
 			break ;
 		add_history(input);
-		if (are_double_quotes_closed(input) != 0
-			|| are_single_quotes_closed(input) != 0)
+		if (is_quote_closed(input)!= 0)
 		{
 			free(input);
 			continue ;
@@ -43,6 +42,7 @@ int	main(int ac, char **av, char **envp)
 		input = expanded;
 		neutralize_special_char_in_double_quote(input);
 		neutralize_special_char_in_single_quote(input);
+		printf("minishell : %s\n", input);
 		args = ft_split(input, ' ');
 		if (!args || !args[0])
 		{
@@ -50,7 +50,7 @@ int	main(int ac, char **av, char **envp)
 			free_split(args);
 			continue ;
 		}
-		exec_builtin(args, env_list);
+		exec_builtin(args, env_list, input);
 		syntax_special_char(input);
 		free(input);
 		free_split(args);

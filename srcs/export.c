@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 19:54:53 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/20 20:34:25 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/28 12:23:55 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_valid_exp(char *cmd)
 	{
 		ft_putstr_fd("minishell: export: ", STDERR_FILENO);
 		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier2\n", STDERR_FILENO);
 		return (0);
 	}
 	i = 1;
@@ -183,12 +183,8 @@ int	builtin_export(t_env *env_list, char **cmd)
 	}
 	else
 	{
-		while (cmd[i])
-		{
-			if (is_valid_exp(cmd[i]))
-				add_or_replace(&env_list, cmd[i]);
-			i++;
-		}
+		if (is_valid_exp(cmd[i]))
+			add_or_replace(&env_list, cmd[i]);
 	}
 	return (1);
 }
