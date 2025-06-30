@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/28 12:09:45 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/28 17:23:51 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,15 @@ typedef struct s_expand
 	t_quote_state	quote;
 }					t_expand;
 
-
 // expand
 t_env				*create_env_list(char **envp);
 void				add_env_node(t_env **env_list, char *name, char *value);
 char				*expand_variables(char *input, t_env *env_list,
 						int exit_status);
 char				*get_env_value(char *name, t_env *env_list);
+int					extract_var_name(char *input, int start_index,
+						char *var_name_buffer);
+int					is_valid_var_char(char c);
 
 // builtin
 int					builtin_echo(char **args);

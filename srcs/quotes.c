@@ -6,11 +6,19 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 11:44:19 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/23 19:50:51 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:59:07 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	unclosed_quote_error(char quote)
+{
+	if (quote == '\'')
+		ft_putendl_fd("syntax error: unclosed single quote", STDERR_FILENO);
+	else if (quote == '\"')
+		ft_putendl_fd("syntax error: unclosed double quote", STDERR_FILENO);
+}
 
 int	is_quote_closed(char *input)
 {
@@ -34,10 +42,7 @@ int	is_quote_closed(char *input)
 	}
 	if (open)
 	{
-		if (first_quote == '\'')
-			ft_putendl_fd("syntax error: unclosed single quote", STDERR_FILENO);
-		else if (first_quote == '\"')
-			ft_putendl_fd("syntax error: unclosed double quote", STDERR_FILENO);
+		unclosed_quote_error(first_quote);
 		return (1);
 	}
 	return (0);

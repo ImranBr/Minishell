@@ -6,36 +6,11 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:10:02 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/28 14:33:54 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/28 17:23:08 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_valid_var_char(char c)
-{
-	return (ft_isalnum(c) || c == '_');
-}
-
-int	extract_var_name(char *input, int start_index, char *var_name_buffer)
-{
-	int	i;
-
-	i = 0;
-	if (input[start_index] == '?')
-	{
-		var_name_buffer[0] = '?';
-		var_name_buffer[1] = '\0';
-		return (1);
-	}
-	while (is_valid_var_char(input[start_index + i]))
-	{
-		var_name_buffer[i] = input[start_index + i];
-		i++;
-	}
-	var_name_buffer[i] = '\0';
-	return (i);
-}
 
 char	*expand_dollar(char *input, int *i, t_env *env_list, int exit_status)
 {
@@ -57,6 +32,27 @@ char	*expand_dollar(char *input, int *i, t_env *env_list, int exit_status)
 	return (ft_strdup(value));
 }
 
+void	add_char_to_result(t_expand *exp, char c)
+{
+	exp->temp[0] = c;
+	exp->temp[1] = '\0';
+	exp->tmp = exp->result;
+	exp->result = ft_strjoin(exp->result, exp->temp);
+	free(exp->tmp);
+}
+
+void	update_quote_state(char c, t_quote_state *quote)
+{
+	if (c == '\'' && *quote == NO_QUOTE)
+		*quote = SINGLE_QUOTE;
+	else if (c == '\'' && *quote == SINGLE_QUOTE)
+		*quote = NO_QUOTE;
+	else if (c == '"' && *quote == NO_QUOTE)
+		*quote = DOUBLE_QUOTE;
+	else if (c == '"' && *quote == DOUBLE_QUOTE)
+		*quote = NO_QUOTE;
+}
+
 char	*expand_variables(char *input, t_env *env_list, int exit_status)
 {
 	t_expand	exp;
@@ -66,15 +62,8 @@ char	*expand_variables(char *input, t_env *env_list, int exit_status)
 	exp.result = ft_strdup("");
 	while (input[exp.i])
 	{
-		if (input[exp.i] == '\'' && exp.quote == NO_QUOTE)
-			exp.quote = SINGLE_QUOTE;
-		else if (input[exp.i] == '\'' && exp.quote == SINGLE_QUOTE)
-			exp.quote = NO_QUOTE;
-		else if (input[exp.i] == '"' && exp.quote == NO_QUOTE)
-			exp.quote = DOUBLE_QUOTE;
-		else if (input[exp.i] == '"' && exp.quote == DOUBLE_QUOTE)
-			exp.quote = NO_QUOTE;
-		else if (input[exp.i] == '$' && exp.quote != SINGLE_QUOTE)
+		update_quote_state(input[exp.i], &exp.quote);
+		if (input[exp.i] == '$' && exp.quote != SINGLE_QUOTE)
 		{
 			exp.expanded = expand_dollar(input, &exp.i, env_list, exit_status);
 			exp.tmp = exp.result;
@@ -84,13 +73,7 @@ char	*expand_variables(char *input, t_env *env_list, int exit_status)
 			continue ;
 		}
 		else
-		{
-			exp.temp[0] = input[exp.i];
-			exp.temp[1] = '\0';
-			exp.tmp = exp.result;
-			exp.result = ft_strjoin(exp.result, exp.temp);
-			free(exp.tmp);
-		}
+			add_char_to_result(&exp, input[exp.i]);
 		exp.i++;
 	}
 	return (exp.result);

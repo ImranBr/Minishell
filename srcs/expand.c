@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand2.c                                          :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:09:27 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/20 20:12:05 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/28 17:16:01 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,29 @@ t_env	*create_env_list(char **envp)
 		i++;
 	}
 	return (env_list);
+}
+
+int	extract_var_name(char *input, int start_index, char *var_name_buffer)
+{
+	int	i;
+
+	i = 0;
+	if (input[start_index] == '?')
+	{
+		var_name_buffer[0] = '?';
+		var_name_buffer[1] = '\0';
+		return (1);
+	}
+	while (is_valid_var_char(input[start_index + i]))
+	{
+		var_name_buffer[i] = input[start_index + i];
+		i++;
+	}
+	var_name_buffer[i] = '\0';
+	return (i);
+}
+
+int	is_valid_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_');
 }

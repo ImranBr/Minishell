@@ -6,13 +6,11 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:06:23 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/28 12:44:10 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/06/28 15:53:29 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_exit_status = 0;
 
 int	main(int ac, char **av, char **envp)
 {
@@ -20,7 +18,9 @@ int	main(int ac, char **av, char **envp)
 	char	*expanded;
 	char	**args;
 	t_env	*env_list;
+	int		exit_status;
 
+	exit_status = 0;
 	(void)ac;
 	(void)av;
 	input = NULL;
@@ -32,12 +32,12 @@ int	main(int ac, char **av, char **envp)
 		if (!input)
 			break ;
 		add_history(input);
-		if (is_quote_closed(input)!= 0)
+		if (is_quote_closed(input) != 0)
 		{
 			free(input);
 			continue ;
 		}
-		expanded = expand_variables(input, env_list, g_exit_status);
+		expanded = expand_variables(input, env_list, exit_status);
 		free(input);
 		input = expanded;
 		neutralize_special_char_in_double_quote(input);
