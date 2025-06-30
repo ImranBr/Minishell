@@ -6,7 +6,7 @@
 /*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:33:48 by joudafke          #+#    #+#             */
-/*   Updated: 2025/06/30 23:02:45 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/01 00:06:43 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_ast_node	*parse_command(t_token **token_list)
 			|| (*token_list)->type == REDIRECT_OUT
 			|| (*token_list)->type == APPEND || (*token_list)->type == HEREDOC)
 		{
+			if (!cmd)
+				cmd = create_ast_node(NODE_COMMAND);
 			redir = create_redir_node(cmd, *token_list);
 			add_redir_to_cmd(cmd, redir);
 			*token_list = (*token_list)->next;
@@ -67,6 +69,11 @@ t_ast_node	*parse_pipeline(t_token **token_list)
 	t_ast_node	*right;
 	t_ast_node	*node_pipe;
 
+	if (*token_list && (*token_list)->type == PIPE)
+	{
+		write(STDERR_FILENO, "syntax error near unexpected token `|'\n", 39);
+		return (NULL);
+	}
 	left = parse_command(token_list);
 	if (!left)
 		return (NULL);
@@ -243,7 +250,7 @@ void print_ast(t_ast_node *node, int level, bool is_last, bool *branches)
 
 int main(void)
 {
-	char input[] = "| ls -l | grep rfjd kfpvlf txt > out.txt | cat out.txt | echo \"salut\" >> out.txt";
+	char input[] = ">> output.txt | ls -l | grep rfjd kfpvlf txt > out.txt | cat out.txt | echo \"salut\" >> out.txt";
 	t_token *tokens = tokenize(input);
 
 	printf("Tokens:\n");
