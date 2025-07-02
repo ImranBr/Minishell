@@ -6,7 +6,7 @@
 /*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:00:47 by joudafke          #+#    #+#             */
-/*   Updated: 2025/06/26 15:01:03 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:22:27 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	tokenize_words(char *input, t_token **token_list, int i)
 	if (input[i] == '"' || input[i] == '\'')
 	{
 		end_word = ending_quotes(input, i);
-		word_value = ft_substr(input, i + 1, end_word - i - 1);
+		word_value = ft_substr(input, i, end_word - i + 1);
 		i = end_word;
 	}
 	else

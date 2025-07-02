@@ -6,7 +6,7 @@
 /*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:07:31 by joudafke          #+#    #+#             */
-/*   Updated: 2025/06/30 22:01:36 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/01 00:13:53 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <errno.h>
 # include <unistd.h>
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 typedef enum e_token_type
 {
@@ -78,7 +78,7 @@ t_ast_node	*parse_command(t_token **token_list);
 t_ast_node	*parse_pipeline(t_token **token_list);
 
 void		print_indent(int level, bool is_last, bool *branches);
-void 		print_ast(t_ast_node *node, int level, bool is_last, bool *branches);
+void		print_ast(t_ast_node *node, int level, bool is_last, bool *branches);
 char		*ft_strdup(const char *s);
 int			ft_strlen(const char *s);
 char		*ft_substr(const char *s, unsigned int start, int len);

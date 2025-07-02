@@ -6,7 +6,7 @@
 /*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:33:48 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/01 00:06:43 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:37:58 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ t_ast_node	*parse_command(t_token **token_list)
 			add_args_to_cmd(cmd, ft_strdup((*token_list)->value));
 		}
 		else if ((*token_list)->type == REDIRECT_IN
-			|| (*token_list)->type == REDIRECT_OUT
-			|| (*token_list)->type == APPEND || (*token_list)->type == HEREDOC)
+			|| (*token_list)->type == REDIRECT_OUT || (*token_list)->type == APPEND
+			|| (*token_list)->type == HEREDOC)
 		{
 			if (!cmd)
 				cmd = create_ast_node(NODE_COMMAND);
@@ -250,7 +250,7 @@ void print_ast(t_ast_node *node, int level, bool is_last, bool *branches)
 
 int main(void)
 {
-	char input[] = ">> output.txt | ls -l | grep rfjd kfpvlf txt > out.txt | cat out.txt | echo \"salut\" >> out.txt";
+	char input[] = "<< output.txt | echo \'\"$USER\"\' | grep rfjd kfpvlf txt > out.txt | cat out.txt | echo \"salut\" >> out.txt";
 	t_token *tokens = tokenize(input);
 
 	printf("Tokens:\n");
