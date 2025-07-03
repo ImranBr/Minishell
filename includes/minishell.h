@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/28 17:23:51 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:26:56 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include "parser.h"
 # include "printf.h"
 # include <errno.h>
 # include <limits.h>
