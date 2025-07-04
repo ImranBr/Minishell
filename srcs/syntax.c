@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 16:40:59 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/28 15:51:23 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/03 14:59:53 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	token_error(char c)
 	write(STDERR_FILENO, "'\n", 2);
 }
 
-void	syntax_special_char(char *input)
+void	syntax_pipe(char *input)
 {
 	int	i;
 

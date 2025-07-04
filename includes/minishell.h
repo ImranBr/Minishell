@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/07/03 11:26:56 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:56:07 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ typedef struct s_expand
 	char			*expanded;
 	char			temp[2];
 	int				i;
-	int				in_single_quote;
-	int				in_double_quote;
 	t_quote_state	quote;
 }					t_expand;
 
@@ -64,14 +62,16 @@ int					extract_var_name(char *input, int start_index,
 int					is_valid_var_char(char c);
 
 // builtin
+void				exec_builtin(char **args, t_env *env_list, char *input);
 int					builtin_echo(char **args);
 int					builtin_env(t_env *env_list);
 int					builtin_pwd(void);
 void				ft_cd(char *path);
-void				exec_builtin(char **args, t_env *env_list, char *input);
-int					builtin_export(t_env *env_list, char **cmd);
 void				builtin_exit(t_env *env_list, char **args, char *input);
 t_env				*builtin_unset(t_env *env, char *cmd);
+int					builtin_export(t_env *env_list, char **cmd);
+t_env				*find_env_node(t_env *env, char *name);
+void				add_or_replace(t_env **env, char *cmd);
 
 // caracteres & quotes
 int					is_quote_closed(char *input);
@@ -80,7 +80,7 @@ void				neutralize_special_char_in_double_quote(char *input);
 void				neutralize_special_char_in_single_quote(char *input);
 
 // syntax
-void				syntax_special_char(char *input);
+void				syntax_pipe(char *input);
 
 // utils
 int					ft_strcmp(char *s1, char *s2);

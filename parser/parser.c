@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:33:48 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/02 17:37:58 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:26:56 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_ast_node	*create_redir_node(t_ast_node *cmd, t_token *token_list)
 
 t_ast_node	*parse_command(t_token **token_list)
 {
-	t_ast_node		*cmd;
-	t_ast_node		*redir;
+	t_ast_node	*cmd;
+	t_ast_node	*redir;
 
 	cmd = NULL;
 	if (!token_list || !*token_list)
@@ -49,8 +49,8 @@ t_ast_node	*parse_command(t_token **token_list)
 			add_args_to_cmd(cmd, ft_strdup((*token_list)->value));
 		}
 		else if ((*token_list)->type == REDIRECT_IN
-			|| (*token_list)->type == REDIRECT_OUT || (*token_list)->type == APPEND
-			|| (*token_list)->type == HEREDOC)
+			|| (*token_list)->type == REDIRECT_OUT
+			|| (*token_list)->type == APPEND || (*token_list)->type == HEREDOC)
 		{
 			if (!cmd)
 				cmd = create_ast_node(NODE_COMMAND);
@@ -96,51 +96,55 @@ t_ast_node	*parse_pipeline(t_token **token_list)
 }
 
 // Implémentation de ft_strdup (si pas déjà incluse)
-char *ft_strdup(const char *s)
+char	*ft_strdup(const char *s)
 {
-	int len = strlen(s) + 1;
-	char *copy = malloc(len);
+	int		len;
+	char	*copy;
+
+	len = strlen(s) + 1;
+	copy = malloc(len);
 	if (copy)
 		memcpy(copy, s, len);
-	return copy;
+	return (copy);
 }
 
 // Implémentation de ft_strlen (si pas déjà incluse)
-int ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
-	int len = 0;
+	int	len;
+
+	len = 0;
 	while (s[len])
 		len++;
-	return len;
+	return (len);
 }
 
 // Implémentation de ft_substr (utilisée par le tokenizer)
-char *ft_substr(const char *s, unsigned int start, int len)
+char	*ft_substr(const char *s, unsigned int start, int len)
 {
-	char *sub;
-	int i = 0;
+	char	*sub;
+	int		i;
 
+	i = 0;
 	if (start >= ft_strlen(s))
-		return ft_strdup("");
-
+		return (ft_strdup(""));
 	sub = malloc(len + 1);
 	if (!sub)
-		return NULL;
-
+		return (NULL);
 	while (i < len && s[start + i])
 	{
 		sub[i] = s[start + i];
 		i++;
 	}
 	sub[i] = '\0';
-	return sub;
+	return (sub);
 }
 
 // // Fonction d'affichage récursif de l'AST
 // void print_ast(t_ast_node *node, int level)
 // {
 // 	if (!node)
-// 		return;
+// 		return ;
 
 // 	for (int i = 0; i < level; i++)
 // 		printf("  ");
@@ -171,7 +175,7 @@ char *ft_substr(const char *s, unsigned int start, int len)
 // 	}
 // }
 
-void print_indent(int level, bool is_last, bool *branches)
+void	print_indent(int level, bool is_last, bool *branches)
 {
 	for (int i = 0; i < level; i++)
 	{
@@ -180,24 +184,26 @@ void print_indent(int level, bool is_last, bool *branches)
 		else
 			printf("    ");
 	}
-
 	if (is_last)
 		printf("└── ");
 	else
 		printf("├── ");
 }
 
-void print_ast(t_ast_node *node, int level, bool is_last, bool *branches)
+void	print_ast(t_ast_node *node, int level, bool is_last, bool *branches)
 {
+	t_ast_node	*redir;
+	int			redir_index;
+	bool		last_redir;
+
 	if (!node)
-		return;
-
+		return ;
 	print_indent(level, is_last, branches);
-
 	if (node->type == NODE_PIPE)
 	{
 		printf("PIPE\n");
-		branches[level] = !is_last;  // Marque qu'on continue à dessiner la colonne si ce n'est pas le dernier enfant
+		branches[level] = !is_last;
+			// Marque qu'on continue à dessiner la colonne si ce n'est pas le dernier enfant
 		print_ast(node->left, level + 1, false, branches);
 		print_ast(node->right, level + 1, true, branches);
 	}
@@ -206,15 +212,15 @@ void print_ast(t_ast_node *node, int level, bool is_last, bool *branches)
 		printf("COMMAND\n");
 		for (int i = 0; i < node->args_count; i++)
 		{
-			print_indent(level + 1, i == node->args_count - 1 && node->right == NULL, branches);
+			print_indent(level + 1, i == node->args_count - 1
+				&& node->right == NULL, branches);
 			printf("arg[%d]: %s\n", i, node->args[i]);
 		}
-
-		t_ast_node *redir = node->right;
-		int redir_index = 0;
+		redir = node->right;
+		redir_index = 0;
 		while (redir)
 		{
-			bool last_redir = (redir->right == NULL);
+			last_redir = (redir->right == NULL);
 			print_indent(level + 1, last_redir, branches);
 			printf("REDIRECT (%d): %s\n", redir->type, redir->filename);
 			redir = redir->right;
@@ -245,33 +251,31 @@ void print_ast(t_ast_node *node, int level, bool is_last, bool *branches)
 
 // 	free_ast(ast);
 // 	free_tokens(tokens);
-// 	return 0;
+// 	return (0);
 // }
 
-int main(void)
+int	main(void)
 {
-	char input[] = "<< output.txt | echo \'\"$USER\"\' | grep rfjd kfpvlf txt > out.txt | cat out.txt | echo \"salut\" >> out.txt";
-	t_token *tokens = tokenize(input);
+	char		input[] = "<< output.txt | echo \'\"$USER\"\' | grep rfjd kfpvlf txt > out.txt | cat out.txt | echo \"salut\" >> out.txt";
+	t_token		*tokens;
+	t_ast_node	*ast;
+	bool		branches[100] = {0};
 
+	tokens = tokenize(input);
 	printf("Tokens:\n");
 	for (t_token *t = tokens; t && t->type != EOF_TOKEN; t = t->next)
 		printf("  type=%d, value='%s'\n", t->type, t->value);
-
-	t_ast_node *ast = parse_pipeline(&tokens);
+	ast = parse_pipeline(&tokens);
 	if (!ast)
 	{
 		fprintf(stderr, "Erreur de parsing\n");
 		free_tokens(tokens);
-		return 1;
+		return (1);
 	}
-
 	printf("\nAST:\n");
-
 	// Initialisation du tableau des branches
-	bool branches[100] = {0};
 	print_ast(ast, 0, true, branches);
-
 	free_ast(ast);
 	free_tokens(tokens);
-	return 0;
+	return (0);
 }

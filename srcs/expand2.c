@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 15:10:02 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/28 17:23:08 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/03 15:57:12 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	*expand_dollar(char *input, int *i, t_env *env_list, int exit_status)
 		return (ft_itoa(exit_status));
 	}
 	len = extract_var_name(input, *i, var_name);
+	if (len == 0)
+		return (ft_strdup(""));
 	*i += len;
 	value = get_env_value(var_name, env_list);
 	if (!value)

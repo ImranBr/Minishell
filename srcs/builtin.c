@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/30 22:52:18 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:24:53 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,8 @@ int	builtin_pwd(void)
 {
 	char	cwd[PATH_MAX];
 
-	// char *cwd;
-	// cwd = getcwd(NULL, 0);
 	getcwd(cwd, sizeof(cwd));
-	// if (!cwd)
-	// {
-	// 	perror("pwd");
-	// 	return (1);
-	// }
 	printf("%s\n", cwd);
-	// free(cwd);
 	return (0);
 }
 
@@ -34,13 +26,11 @@ int	builtin_env(t_env *env_list)
 	t_env	*tmp;
 
 	tmp = env_list;
-	// pointeur tmp quon initialise avec la tete de la liste
 	while (tmp)
 	{
 		if (tmp->value)
-			// si variable a une valeur,on affiche son nom et sa valur
 			printf("%s=%s\n", tmp->name, tmp->value);
-		else // sinon on affiche uniquement son nom
+		else
 			printf("%s\n", tmp->name);
 		tmp = tmp->next;
 	}

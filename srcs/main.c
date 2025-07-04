@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:06:23 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/28 15:53:29 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/03 16:09:57 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	main(int ac, char **av, char **envp)
 		expanded = expand_variables(input, env_list, exit_status);
 		free(input);
 		input = expanded;
-		neutralize_special_char_in_double_quote(input);
-		neutralize_special_char_in_single_quote(input);
 		printf("minishell : %s\n", input);
 		args = ft_split(input, ' ');
 		if (!args || !args[0])
@@ -51,7 +49,7 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		}
 		exec_builtin(args, env_list, input);
-		syntax_special_char(input);
+		syntax_pipe(input);
 		free(input);
 		free_split(args);
 	}

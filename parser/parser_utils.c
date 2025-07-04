@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 20:56:02 by joudafke          #+#    #+#             */
-/*   Updated: 2025/06/30 22:05:11 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:26:53 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	free_ast(t_ast_node *node)
 	if (node->type == NODE_COMMAND && node->args)
 	{
 		while (i < node->args_count)
-		{	
+		{
 			free(node->args[i]);
 			i++;
 		}
