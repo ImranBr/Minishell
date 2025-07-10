@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 11:44:19 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/28 15:59:07 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/06 16:17:13 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,22 @@ void	unclosed_quote_error(char quote)
 
 int	is_quote_closed(char *input)
 {
+	char	open_quote;
 	int		i;
-	char	first_quote;
-	int		open;
 
 	i = 0;
-	first_quote = 0;
-	open = 0;
+	open_quote = 0;
 	while (input[i])
 	{
-		if (!first_quote && (input[i] == '\'' || input[i] == '\"'))
-		{
-			first_quote = input[i];
-			open = 1;
-		}
-		else if (input[i] == first_quote)
-			open = !open;
+		if (!open_quote && (input[i] == '\'' || input[i] == '\"'))
+			open_quote = input[i];
+		else if (open_quote && input[i] == open_quote)
+			open_quote = 0;
 		i++;
 	}
-	if (open)
+	if (open_quote)
 	{
-		unclosed_quote_error(first_quote);
+		unclosed_quote_error(open_quote);
 		return (1);
 	}
 	return (0);

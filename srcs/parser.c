@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:33:48 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/04 20:26:56 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:53:29 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,73 +108,6 @@ char	*ft_strdup(const char *s)
 	return (copy);
 }
 
-// Implémentation de ft_strlen (si pas déjà incluse)
-int	ft_strlen(const char *s)
-{
-	int	len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
-}
-
-// Implémentation de ft_substr (utilisée par le tokenizer)
-char	*ft_substr(const char *s, unsigned int start, int len)
-{
-	char	*sub;
-	int		i;
-
-	i = 0;
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	sub = malloc(len + 1);
-	if (!sub)
-		return (NULL);
-	while (i < len && s[start + i])
-	{
-		sub[i] = s[start + i];
-		i++;
-	}
-	sub[i] = '\0';
-	return (sub);
-}
-
-// // Fonction d'affichage récursif de l'AST
-// void print_ast(t_ast_node *node, int level)
-// {
-// 	if (!node)
-// 		return ;
-
-// 	for (int i = 0; i < level; i++)
-// 		printf("  ");
-
-// 	if (node->type == NODE_PIPE)
-// 	{
-// 		printf("PIPE\n");
-// 		print_ast(node->left, level + 1);
-// 		print_ast(node->right, level + 1);
-// 	}
-// 	else if (node->type == NODE_COMMAND)
-// 	{
-// 		printf("COMMAND\n");
-// 		for (int i = 0; i < node->args_count; i++)
-// 		{
-// 			for (int j = 0; j <= level; j++)
-// 				printf("  ");
-// 			printf("arg[%d]: %s\n", i, node->args[i]);
-// 		}
-// 		t_ast_node *redir = node->right;
-// 		while (redir)
-// 		{
-// 			for (int j = 0; j <= level; j++)
-// 				printf("  ");
-// 			printf("REDIRECT (%d): %s\n", redir->type, redir->filename);
-// 			redir = redir->right;
-// 		}
-// 	}
-// }
-
 void	print_indent(int level, bool is_last, bool *branches)
 {
 	for (int i = 0; i < level; i++)
@@ -229,53 +162,3 @@ void	print_ast(t_ast_node *node, int level, bool is_last, bool *branches)
 	}
 }
 
-// int main(void)
-// {
-// 	char input[] = "ls -l | grep txt > out.txt";
-// 	t_token *tokens = tokenize(input);
-
-// 	printf("Tokens:\n");
-// 	for (t_token *t = tokens; t && t->type != EOF_TOKEN; t = t->next)
-// 		printf("  type=%d, value='%s'\n", t->type, t->value);
-
-// 	t_ast_node *ast = parse_pipeline(&tokens);
-// 	if (!ast)
-// 	{
-// 		fprintf(stderr, "Erreur de parsing\n");
-// 		free_tokens(tokens);
-// 		return (1);
-// 	}
-
-// 	printf("\nAST:\n");
-// 	print_ast(ast, 0);
-
-// 	free_ast(ast);
-// 	free_tokens(tokens);
-// 	return (0);
-// }
-
-int	main(void)
-{
-	char		input[] = "<< output.txt | echo \'\"$USER\"\' | grep rfjd kfpvlf txt > out.txt | cat out.txt | echo \"salut\" >> out.txt";
-	t_token		*tokens;
-	t_ast_node	*ast;
-	bool		branches[100] = {0};
-
-	tokens = tokenize(input);
-	printf("Tokens:\n");
-	for (t_token *t = tokens; t && t->type != EOF_TOKEN; t = t->next)
-		printf("  type=%d, value='%s'\n", t->type, t->value);
-	ast = parse_pipeline(&tokens);
-	if (!ast)
-	{
-		fprintf(stderr, "Erreur de parsing\n");
-		free_tokens(tokens);
-		return (1);
-	}
-	printf("\nAST:\n");
-	// Initialisation du tableau des branches
-	print_ast(ast, 0, true, branches);
-	free_ast(ast);
-	free_tokens(tokens);
-	return (0);
-}

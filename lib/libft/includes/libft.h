@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 21:24:57 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/15 20:31:08 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:23:57 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int					ft_toupper(int c);
 int					ft_tolower(int c);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
-int					ft_strncmp(const char *s1, const char *s2, size_t n);
+int					ft_strncmp( char *s1,  char *s2, size_t n);
 void				*ft_memchr(const void *bmem, int schar, size_t size);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 char				*ft_strnstr(const char *chpr, const char *souch,

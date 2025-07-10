@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 20:56:02 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/04 20:26:53 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/06 20:27:53 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_ast_node	*create_ast_node(t_node_type node_type)
 	new_node->left = NULL;
 	new_node->right = NULL;
 	new_node->filename = NULL;
+	new_node->args_count = 0;
 	return (new_node);
 }
 
