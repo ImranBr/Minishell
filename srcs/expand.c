@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 20:09:27 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/07/10 15:10:13 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 17:10:14 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void	add_env_node(t_env **env_list, char *name, char *value)
 			tmp = tmp->next;
 		tmp->next = new_node;
 	}
-	free(name);
-	free(value);
 }
 
 t_env	*create_env_list(char **envp)

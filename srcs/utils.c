@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 16:21:52 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/06/20 20:34:51 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:44:13 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,30 @@ t_env	*free_list(t_env *a)
 		a = next_node;
 	}
 	return (NULL);
+}
+char	*ft_strjoin2(char const *s1, char const *s2)
+{
+	char	*new_str;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	new_str = (char *)malloc(strlen(s1) + strlen(s2) + 2);
+	if (!new_str)
+		return (NULL);
+	i = 0;
+	while (s1[i] != '\0')
+	{
+		new_str[i] = s1[i];
+		i++;
+	}
+	new_str[i++] = '/';
+	j = 0;
+	while (s2[j] != '\0')
+	{
+		new_str[i++] = s2[j++];
+	}
+	new_str[i] = '\0';
+	return (new_str);
 }

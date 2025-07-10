@@ -1,0 +1,3 @@
+exec_builtin called with command: 'echo'
+builtin_echo called
+ls

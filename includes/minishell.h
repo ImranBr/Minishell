@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/07/10 15:36:15 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 16:44:25 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ typedef struct s_env
 {
 	char			*name;
 	char			*value;
-	char *env;
+	char			*env;
 	struct s_env	*next;
-	
+
 }					t_env;
 
 typedef enum e_quote_state
@@ -88,7 +88,7 @@ void				syntax_pipe(char *input);
 // utils
 int					ft_strcmp(char *s1, char *s2);
 t_env				*free_list(t_env *a);
-int	execute_ast(t_ast_node *node, char **envp, t_env *env_list);
-
+int					execute_ast(t_ast_node *node, char **envp, t_env *env_list);
+char				*ft_strjoin2(char const *s1, char const *s2);
 
 #endif
