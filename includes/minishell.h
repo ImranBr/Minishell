@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/07/10 16:44:25 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:55:25 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft.h"
 # include "parser.h"
 # include "printf.h"
-// # include "pipex_bonus.h"
+# include <signal.h>
 # include <errno.h>
 # include <limits.h>
 # include <linux/limits.h>
@@ -28,13 +28,14 @@
 # include <string.h>
 # include <unistd.h>
 
+
 typedef struct s_env
 {
 	char			*name;
 	char			*value;
 	char			*env;
 	struct s_env	*next;
-
+	
 }					t_env;
 
 typedef enum e_quote_state

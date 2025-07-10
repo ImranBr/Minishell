@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:33:48 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/10 15:53:29 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 23:31:06 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ t_ast_node	*parse_command(t_token **token_list)
 		{
 			if (!cmd)
 				cmd = create_ast_node(NODE_COMMAND);
+			add_args_to_cmd(cmd, ft_strdup((*token_list)->value));
 			redir = create_redir_node(cmd, *token_list);
 			add_redir_to_cmd(cmd, redir);
 			*token_list = (*token_list)->next;

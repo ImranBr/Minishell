@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 17:06:23 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/07/10 15:53:04 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 23:13:40 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,17 @@
 // 	return (0);
 // }
 
+pid_t	g_signal_pid = 0;
+
+void	check_signal(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char		*input;
@@ -74,11 +85,11 @@ int	main(int ac, char **av, char **envp)
 	exit_status = 0;
 	(void)ac;
 	(void)av;
-
-
 	env_list = create_env_list(envp);
 	while (1)
 	{
+		signal(SIGINT, check_signal);
+		signal(SIGQUIT, SIG_IGN);
 		input = readline("minishell : ");
 		if (!input)
 			break ;
@@ -91,7 +102,6 @@ int	main(int ac, char **av, char **envp)
 		expanded = expand_variables(input, env_list, exit_status);
 		free(input);
 		input = expanded;
-
 		// Tokenisation
 		tokens = tokenize(input);
 		printf("Tokens:\n");
@@ -110,7 +120,6 @@ int	main(int ac, char **av, char **envp)
 			free(input);
 			continue ;
 		}
-
 		printf("\nAST:\n");
 		print_ast(ast, 0, true, branches);
 		// --- Nouvelle partie : gestion builtin ---
@@ -124,7 +133,7 @@ int	main(int ac, char **av, char **envp)
 			free_ast(ast);
 			free_tokens(tokens);
 			free(input);
-			continue ;	
+			continue ;
 		}
 		free_split(args);
 		// Ici : exécution de l'AST (non montrée

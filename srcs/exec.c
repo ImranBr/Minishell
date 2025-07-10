@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:15:42 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/10 17:39:19 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 23:19:13 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 		}
 		if ((pid_left = fork()) == -1)
 		{
+			signal(SIGQUIT, SIG_DFL); 
+			signal(SIGINT, SIG_DFL);
 			perror("fork");
 			return (EXIT_FAILURE);
 		}
@@ -112,6 +114,8 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			perror("fork");
 			return (EXIT_FAILURE);
 		}
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL); 
 		if (pid_right == 0)
 		{
 			close(pipe_fd[1]);
@@ -137,6 +141,8 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			perror("fork");
 			return (EXIT_FAILURE);
 		}
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL); 
 		if (pid_cmd == 0)
 		{
 			process_redirections(node->redirections);
@@ -158,26 +164,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			execve(path, node->args, envp);
 			perror("execve");
 			exit(EXIT_FAILURE);
-			// 			char *cmd_path = NULL;
-			// char *tmp = NULL;
-			// int i = 0;
-			// while (path[i])
-			// {
-			// 	tmp = ft_strjoin(path[i], "/");
-			// 	cmd_path = ft_strjoin(tmp, node->args[0]);
-			// 	free(tmp);
-			// 	if (access(cmd_path, X_OK) == 0)
-			// 	{
-			// 		execve(cmd_path, node->args, envp);
-			// 		perror("execve"); // Si execve échoue malgré tout
-			// 		exit(EXIT_FAILURE);
-			// 	}
-			// 	free(cmd_path);
-			// 	i++;
 		}
-		// fprintf(stderr, "%s: command not found\n", node->args[0]);
-		// exit(127);
-		// 		}
 		waitpid(pid_cmd, NULL, 0);
 	}
 	return (0);

@@ -6,11 +6,12 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 20:56:02 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/10 17:51:15 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 19:37:12 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "minishell.h"
 
 t_ast_node	*create_ast_node(t_node_type node_type)
 {
@@ -67,6 +68,7 @@ int	add_args_to_cmd(t_ast_node *cmd, char *arg)
 // 		current->right = redir;
 // 	}
 // }
+
 void add_redir_to_cmd(t_ast_node *cmd, t_ast_node *redir)
 {
 	t_ast_node	*current;
@@ -205,7 +207,9 @@ void	*process_redirections(t_ast_node *redir_list)
 			process_redirect_in(current_node);
 		}
 		else if (current_node->redir_type == REDIRECT_IN)
+		{
 			process_redirect_in(current_node);
+		}
 		else if (current_node->redir_type == REDIRECT_OUT)
 			process_redirect_out(current_node);
 		else if (current_node->redir_type == APPEND)
@@ -237,3 +241,4 @@ void	free_ast(t_ast_node *node)
 	free_ast(node->right);
 	free(node);
 }
+
