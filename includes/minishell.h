@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/07/11 13:03:24 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/12 00:12:27 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct s_env
 {

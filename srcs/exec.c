@@ -6,16 +6,12 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:15:42 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 13:06:19 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/12 00:11:55 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
 
 char	**get_path(t_env *env_list)
 {
