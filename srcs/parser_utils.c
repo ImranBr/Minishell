@@ -6,12 +6,12 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 20:56:02 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/10 19:37:12 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/11 13:03:03 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "minishell.h"
+#include "parser.h"
 
 t_ast_node	*create_ast_node(t_node_type node_type)
 {
@@ -69,7 +69,7 @@ int	add_args_to_cmd(t_ast_node *cmd, char *arg)
 // 	}
 // }
 
-void add_redir_to_cmd(t_ast_node *cmd, t_ast_node *redir)
+void	add_redir_to_cmd(t_ast_node *cmd, t_ast_node *redir)
 {
 	t_ast_node	*current;
 
@@ -162,7 +162,8 @@ int	process_redirect_out(t_ast_node *redirect_out_node)
 {
 	int	fd_output;
 
-	fd_output = open(redirect_out_node->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd_output = open(redirect_out_node->filename, O_WRONLY | O_CREAT | O_TRUNC,
+			0644);
 	if (fd_output == -1)
 	{
 		perror(redirect_out_node->filename);
@@ -216,7 +217,7 @@ void	*process_redirections(t_ast_node *redir_list)
 			process_append(current_node);
 		current_node = current_node->right;
 	}
-	return NULL;
+	return (NULL);
 }
 
 void	free_ast(t_ast_node *node)
@@ -241,4 +242,3 @@ void	free_ast(t_ast_node *node)
 	free_ast(node->right);
 	free(node);
 }
-

@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:33:48 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/10 23:31:06 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/10 23:38:03 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	print_ast(t_ast_node *node, int level, bool is_last, bool *branches)
 	{
 		printf("PIPE\n");
 		branches[level] = !is_last;
-			// Marque qu'on continue à dessiner la colonne si ce n'est pas le dernier enfant
+		// Marque qu'on continue à dessiner la colonne si ce n'est pas le dernier enfant
 		print_ast(node->left, level + 1, false, branches);
 		print_ast(node->right, level + 1, true, branches);
 	}
@@ -162,4 +162,3 @@ void	print_ast(t_ast_node *node, int level, bool is_last, bool *branches)
 		}
 	}
 }
-

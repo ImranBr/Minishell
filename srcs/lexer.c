@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/12 21:00:47 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/10 23:14:01 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/11 12:09:06 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,33 +91,8 @@ int	tokenize_words(char *input, t_token **token_list, size_t start_index)
 	assembled_word[pos] = '\0';
 	add_token(token_list, create_token(WORD, assembled_word));
 	free(assembled_word); // si create_token fait strdup
-	return (i - 1); // retourne l'index du dernier caractère traité
+	return (i - 1);       // retourne l'index du dernier caractère traité
 }
-
-// int	tokenize_words(char *input, t_token **token_list, int i)
-// {
-// 	char	*word_value;
-// 	int		start;
-// 	int		end_word;
-
-// 	start = i;
-// 	if (input[i] == '"' || input[i] == '\'')
-// 	{
-// 		end_word = ending_quotes(input, i);
-// 		word_value = ft_substr(input, i, end_word - i + 1);
-// 		i = end_word;
-// 	}
-// 	else
-// 	{
-// 		while (input[i] && !is_space(input[i]) && !is_operator(input[i]))
-// 			i++;
-// 		word_value = ft_substr(input, start, i - start);
-// 		i--;
-// 	}
-// 	add_token(token_list, create_token(WORD, word_value));
-// 	free(word_value);
-// 	return (i);
-// }
 
 t_token	*tokenize(char *input)
 {

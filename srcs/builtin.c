@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:45:44 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/07/06 18:55:42 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/11 13:02:04 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,31 +60,30 @@ int	builtin_env(t_env *env_list)
 // 		printf("\n");
 // 	return (0);
 // }
-int builtin_echo(char **args)
+int	builtin_echo(char **args)
 {
-    int i = 1;
-    int newline = 1;
+	int	i;
+	int	newline;
 
-    printf("builtin_echo called\n");  // DEBUG
-
-    if (args[i] && ft_strncmp(args[i], "-n", 5) == 0)
-    {
-        newline = 0;
-        i++;
-    }
-    while (args[i])
-    {
-        printf("%s", args[i]);
-        if (args[i + 1])
-            printf(" ");
-        i++;
-    }
-    if (newline)
-        printf("\n");
-
-    fflush(stdout); // FORCER l’affichage
-
-    return 0;
+	i = 1;
+	newline = 1;
+	printf("builtin_echo called\n"); // DEBUG
+	if (args[i] && ft_strncmp(args[i], "-n", 5) == 0)
+	{
+		newline = 0;
+		i++;
+	}
+	while (args[i])
+	{
+		printf("%s", args[i]);
+		if (args[i + 1])
+			printf(" ");
+		i++;
+	}
+	if (newline)
+		printf("\n");
+	fflush(stdout); // FORCER l’affichage
+	return (0);
 }
 
 void	error_cd(void)

@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:15:42 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/10 23:19:13 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/11 13:06:19 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@
 
 char	**get_path(t_env *env_list)
 {
-	char	*path_name = "PATH";
-	char	**tab = NULL;
+	char	*path_name;
+	char	**tab;
 
+	path_name = "PATH";
+	tab = NULL;
 	while (env_list)
 	{
 		if (env_list->name && ft_strcmp(env_list->name, path_name) == 0)
@@ -34,7 +36,6 @@ char	**get_path(t_env *env_list)
 	}
 	return (NULL);
 }
-
 
 char	*get_cmd(t_env *env_list, char *s1)
 {
@@ -96,7 +97,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 		}
 		if ((pid_left = fork()) == -1)
 		{
-			signal(SIGQUIT, SIG_DFL); 
+			signal(SIGQUIT, SIG_DFL);
 			signal(SIGINT, SIG_DFL);
 			perror("fork");
 			return (EXIT_FAILURE);
@@ -115,7 +116,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			return (EXIT_FAILURE);
 		}
 		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL); 
+		signal(SIGQUIT, SIG_DFL);
 		if (pid_right == 0)
 		{
 			close(pipe_fd[1]);
@@ -142,7 +143,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			return (EXIT_FAILURE);
 		}
 		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL); 
+		signal(SIGQUIT, SIG_DFL);
 		if (pid_cmd == 0)
 		{
 			process_redirections(node->redirections);
