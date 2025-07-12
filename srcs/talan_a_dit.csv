@@ -23,4 +23,4 @@ donc faut tout free
 quand on fork pas pour un builtin pas besoin de free car c'est le process parent (celui qui gere le programme)
 
 
-Espandju Talan
+Espandju Talan ok
