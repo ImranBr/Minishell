@@ -1,0 +1,26 @@
+en gros
+
+
+
+salam
+
+
+
+quand vous faites un fork, le processus enfant herite de tout ce que le process parent a alloue
+    |
+    |___ donc toutes les commandes, les listes chainees, les split tudo el mondo
+
+execve s'occupe de tout free lorsqu'il reussit.
+|_ s'il fail il free rien du tout car il fail.
+\_ donc faut tout free a sa place
+
+
+quand on fait un builtin qui necessite de fork --> on herite de tout ce qu'on a alloue
+
+donc faut tout free
+
+
+quand on fork pas pour un builtin pas besoin de free car c'est le process parent (celui qui gere le programme)
+
+
+Espandju Talan

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:33:48 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 20:58:26 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/12 21:39:15 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,18 @@ t_ast_node	*parse_command(t_token **token_list, t_ast_node *cmd)
 		{
 			if (!cmd)
 				cmd = create_ast_node(NODE_COMMAND);
-			add_args_to_cmd(cmd, ft_strdup((*token_list)->value));
+
+			char *tmp1 = ft_strdup((*token_list)->value);
+			add_args_to_cmd(cmd, tmp1);
 		}
 		else if ((*token_list)->type == 2 || (*token_list)->type == 3
 			|| (*token_list)->type == 4 || (*token_list)->type == 5)
 		{
 			if (!cmd)
 				cmd = create_ast_node(NODE_COMMAND);
-			add_args_to_cmd(cmd, ft_strdup((*token_list)->value));
+
+			char *tmp2 = ft_strdup((*token_list)->value);
+			add_args_to_cmd(cmd, tmp2);
 			redir = create_redir_node(cmd, *token_list);
 			add_redir_to_cmd(cmd, redir);
 			*token_list = (*token_list)->next;

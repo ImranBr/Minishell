@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:44:21 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 23:44:22 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/12 21:06:44 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,42 @@ void	check_signal(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
+// int main(int ac, char **av, char **envp)
+// {
+//     char *input;
+//     char *expanded;
+//     t_env *env_list;
+//     int exit_status;
+    
+//     exit_status = 0;
+//     (void)ac;
+//     (void)av;
+    
+//     env_list = create_env_list(envp);
+    
+//     while (1)
+//     {
+//         input = readline("minishell : ");
+//         if (!input)
+//             break;
+//         add_history(input);
+//         if (is_quote_closed(input) != 0)
+//         {
+//             free(input);
+//             continue;
+//         }
+//         // Test expand
+//         expanded = expand_variables(input, env_list, exit_status);
+//         printf("Original: %s\n", input);
+//         printf("Expanded: %s\n", expanded);
+//         free(input);
+//         free(expanded);
+//     }
+    
+//     rl_clear_history();
+//     free_list(env_list);
+//     return (0);
+// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -96,6 +132,6 @@ int	main(int ac, char **av, char **envp)
 		free(input);
 	}
 	rl_clear_history();
-	free_list(env_list);
+	env_list = free_list(env_list);
 	return (0);
 }

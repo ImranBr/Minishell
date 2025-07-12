@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:15:42 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 22:32:24 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/12 21:50:02 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,9 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			if (is_builtin(node->args[0]) && needs_child_process(node->args[0]))
 			{
 				exec_builtin(node->args, env_list, NULL);
+				// free le split de la ligne 116 dans main.c
+				free_list(env_list);
+				free_ast(node);
 				exit(0);
 			}
 			path = get_cmd(env_list, node->args[0]);

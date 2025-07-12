@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:43:07 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 23:43:09 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/12 21:24:49 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	add_env_node(t_env **env_list, char *name, char *value)
 	else
 		new_node->value = NULL;
 	new_node->next = NULL;
+	// printf("[DEBUG] add_env_node: %s=%s\n", name, value);
 	if (*env_list == NULL)
 		*env_list = new_node;
 	else
@@ -73,6 +74,8 @@ t_env	*create_env_list(char **envp)
 				name = ft_substr(envp[i], 0, j);
 				value = ft_substr(envp[i], j + 1, ft_strlen(envp[i]));
 				add_env_node(&env_list, name, value);
+				free(name);
+				free(value);
 				break ;
 			}
 			j++;

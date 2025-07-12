@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:44:55 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 23:44:56 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/12 21:24:59 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_env	*free_list(t_env *a)
 		return (NULL);
 	while (a)
 	{
+		// printf("[DEBUG] free_list: %s=%s\n", a->name, a->value);
 		next_node = a->next;
 		free(a->name);
 		free(a->value);
