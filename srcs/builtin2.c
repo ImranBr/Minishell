@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:42:46 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 23:42:48 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:17:45 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 void	exec_builtin(char **args, t_env *env_list, char *input)
 {
 	if (!args || !args[0])
-	{
-		printf("exec_builtin: args or args[0] is NULL\n");
 		return ;
-	}
-	printf("exec_builtin called with command: '%s'\n", args[0]);
 	if (ft_strncmp(args[0], "pwd", 4) == 0)
 		builtin_pwd();
 	else if (ft_strncmp(args[0], "env", 4) == 0)
@@ -35,5 +31,5 @@ void	exec_builtin(char **args, t_env *env_list, char *input)
 	else if (ft_strncmp(args[0], "exit", 5) == 0)
 		builtin_exit(env_list, args, input);
 	else
-		printf("exec_builtin: command '%s' not found\n", args[0]);
+		return ;
 }
