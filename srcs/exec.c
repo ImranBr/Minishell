@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:15:42 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/13 13:57:28 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/13 17:32:40 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	needs_child_process(char *cmd)
 		|| ft_strcmp(cmd, "env") == 0);
 }
 
-int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
+int	execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token)
 {
 	pid_t	pid_left;
 	pid_t	pid_right;
@@ -117,7 +117,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			close(pipe_fd[0]);
 			dup2(pipe_fd[1], STDOUT_FILENO);
 			close(pipe_fd[1]);
-			execute_ast(node->left, envp, env_list);
+			execute_ast(node->left, envp, env_list, token);
 			free_in_child(env_list, node, path);
 			exit(EXIT_FAILURE);
 		}
@@ -134,7 +134,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			close(pipe_fd[1]);
 			dup2(pipe_fd[0], STDIN_FILENO);
 			close(pipe_fd[0]);
-			execute_ast(node->right, envp, env_list);
+			execute_ast(node->right, envp, env_list, token);
 			free_in_child(env_list, node, path);
 			exit(EXIT_FAILURE);
 		}
@@ -147,6 +147,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 	{
 		if (is_builtin(node->args[0]) && !needs_child_process(node->args[0]))
 		{
+			printf("ici bultin \n");
 			exec_builtin(node->args, env_list, NULL);
 			return (0);
 		}
@@ -167,9 +168,11 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			// }
 			if (is_builtin(node->args[0]) && needs_child_process(node->args[0]))
 			{
+				printf("lalallalalal\n");
 				exec_builtin(node->args, env_list, NULL);
 				// free le split de la ligne 116 dans main.c
 				free_in_child(env_list, node, path);
+				free_tokens(token);
 				exit(0);
 			}
 			path = get_cmd(env_list, node->args[0]);

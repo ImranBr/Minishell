@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:43:07 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/12 21:24:49 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:38:40 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	add_env_node(t_env **env_list, char *name, char *value)
 	else
 		new_node->value = NULL;
 	new_node->next = NULL;
-	// printf("[DEBUG] add_env_node: %s=%s\n", name, value);
 	if (*env_list == NULL)
 		*env_list = new_node;
 	else

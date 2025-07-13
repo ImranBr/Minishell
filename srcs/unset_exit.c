@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:44:46 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 23:44:48 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:45:07 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,11 @@ void	builtin_exit(t_env *env_list, char **args, char *input)
 {
 	long	exit_code;
 
-	printf("exit\n");
 	if (!args || !args[1])
 	{
 		cleanup(env_list, args, input);
 		exit(0);
 	}
-	fprintf(stderr, "DEBUG: args[1] = %s\n", args[1]);
 	if (!ft_is_num(args[1]))
 		handle_non_numeric_exit_arg(env_list, args, input);
 	if (args[2])

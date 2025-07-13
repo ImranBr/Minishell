@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:16:42 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 21:09:06 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/13 17:00:32 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_token	*create_token(t_token_type token_type, char *value)
 {
 	t_token	*new_token;
 
+	printf("!!!!!!!!!!!! creat tok !!!!!!!!!!!!!!!!!!!\n");
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
@@ -66,12 +67,26 @@ void	free_tokens(t_token *token_list)
 {
 	t_token	*tmp;
 
-	while (token_list)
+	t_token *for_print;
+	
+	for_print = token_list;
+	int i = 0;
+	while (for_print)
 	{
-		tmp = token_list;
-		token_list = token_list->next;
+		i++;
+		printf("i = %d, value = %s \n", i , for_print->value);
+		tmp = for_print;
+		for_print = for_print->next;
 		if (tmp->value)
 			free(tmp->value);
 		free(tmp);
 	}
+	// while (token_list)
+	// {
+	// 	tmp = token_list;
+	// 	token_list = token_list->next;
+	// 	if (tmp->value)
+	// 		free(tmp->value);
+	// 	free(tmp);
+	// }
 }

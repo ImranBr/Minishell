@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/07/12 20:53:45 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/13 17:30:43 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void				syntax_pipe(char *input);
 // utils
 int					ft_strcmp(char *s1, char *s2);
 t_env				*free_list(t_env *a);
-int					execute_ast(t_ast_node *node, char **envp, t_env *env_list);
+int					execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token);
 char				*ft_strjoin2(char const *s1, char const *s2);
 
 #endif

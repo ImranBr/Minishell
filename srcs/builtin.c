@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:42:39 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/13 15:18:34 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/13 15:37:56 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	builtin_echo(char **args)
 
 	i = 1;
 	newline = 1;
-	// printf("builtin_echo called\n");
 	if (args[i] && ft_strncmp(args[i], "-n", 5) == 0)
 	{
 		newline = 0;
