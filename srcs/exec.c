@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:15:42 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/13 17:32:40 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/14 00:47:21 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*get_cmd(t_env *env_list, char *s1)
 
 int	is_builtin(char *cmd)
 {
+	printf(" ya un truc  ?????  = %s",cmd);
 	return (ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "echo") == 0
 		|| ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "env") == 0
 		|| ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0
@@ -88,7 +89,8 @@ int	needs_child_process(char *cmd)
 		|| ft_strcmp(cmd, "env") == 0);
 }
 
-int	execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token)
+int	execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token,
+		char *input)
 {
 	pid_t	pid_left;
 	pid_t	pid_right;
@@ -117,7 +119,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token)
 			close(pipe_fd[0]);
 			dup2(pipe_fd[1], STDOUT_FILENO);
 			close(pipe_fd[1]);
-			execute_ast(node->left, envp, env_list, token);
+			execute_ast(node->left, envp, env_list, token, input);
 			free_in_child(env_list, node, path);
 			exit(EXIT_FAILURE);
 		}
@@ -134,8 +136,10 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token)
 			close(pipe_fd[1]);
 			dup2(pipe_fd[0], STDIN_FILENO);
 			close(pipe_fd[0]);
-			execute_ast(node->right, envp, env_list, token);
+			execute_ast(node->right, envp, env_list, token, input);
 			free_in_child(env_list, node, path);
+			free(input);
+			free_tokens(token);
 			exit(EXIT_FAILURE);
 		}
 		close(pipe_fd[0]);
@@ -147,7 +151,6 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token)
 	{
 		if (is_builtin(node->args[0]) && !needs_child_process(node->args[0]))
 		{
-			printf("ici bultin \n");
 			exec_builtin(node->args, env_list, NULL);
 			return (0);
 		}
@@ -168,22 +171,27 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token)
 			// }
 			if (is_builtin(node->args[0]) && needs_child_process(node->args[0]))
 			{
-				printf("lalallalalal\n");
 				exec_builtin(node->args, env_list, NULL);
 				// free le split de la ligne 116 dans main.c
 				free_in_child(env_list, node, path);
 				free_tokens(token);
+				free(input);
 				exit(0);
 			}
 			path = get_cmd(env_list, node->args[0]);
 			if (!path)
 			{
 				perror("command not found");
+				free_in_child(env_list, node, path);
+				free_tokens(token);
+				free(input);
 				exit(127);
 			}
 			execve(path, node->args, envp);
 			free_in_child(env_list, node, path);
 			perror("execve");
+			free_tokens(token);
+			free(input);
 			exit(EXIT_FAILURE);
 		}
 		waitpid(pid_cmd, NULL, 0);

@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:43:07 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/13 15:38:40 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/14 00:45:00 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ void	add_env_node(t_env **env_list, char *name, char *value)
 {
 	t_env	*new_node;
 	t_env	*tmp;
+	
 
+	
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return ;
