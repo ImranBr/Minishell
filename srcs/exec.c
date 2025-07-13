@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:15:42 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/12 21:50:02 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/13 13:57:28 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+
+void	free_in_child(t_env *env_list, t_ast_node *node, char *path)
+{
+	free_list(env_list);
+	free_ast(node);
+	if (path)
+		free(path);
+}
 
 char	**get_path(t_env *env_list)
 {
@@ -88,6 +96,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 	int		pipe_fd[2];
 	char	*path;
 
+	path = NULL;
 	if (node->type == NODE_PIPE)
 	{
 		if (pipe(pipe_fd) == -1)
@@ -109,6 +118,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			dup2(pipe_fd[1], STDOUT_FILENO);
 			close(pipe_fd[1]);
 			execute_ast(node->left, envp, env_list);
+			free_in_child(env_list, node, path);
 			exit(EXIT_FAILURE);
 		}
 		pid_right = fork();
@@ -125,6 +135,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			dup2(pipe_fd[0], STDIN_FILENO);
 			close(pipe_fd[0]);
 			execute_ast(node->right, envp, env_list);
+			free_in_child(env_list, node, path);
 			exit(EXIT_FAILURE);
 		}
 		close(pipe_fd[0]);
@@ -158,8 +169,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 			{
 				exec_builtin(node->args, env_list, NULL);
 				// free le split de la ligne 116 dans main.c
-				free_list(env_list);
-				free_ast(node);
+				free_in_child(env_list, node, path);
 				exit(0);
 			}
 			path = get_cmd(env_list, node->args[0]);
@@ -169,6 +179,7 @@ int	execute_ast(t_ast_node *node, char **envp, t_env *env_list)
 				exit(127);
 			}
 			execve(path, node->args, envp);
+			free_in_child(env_list, node, path);
 			perror("execve");
 			exit(EXIT_FAILURE);
 		}
