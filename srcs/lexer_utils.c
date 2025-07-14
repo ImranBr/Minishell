@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 23:16:42 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/13 19:09:20 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:54:09 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,15 @@ void	free_tokens(t_token *token_list)
 {
 	t_token	*tmp;
 
+	int i = 0;
 	while (token_list)
 	{
+		
 		tmp = token_list;
 		token_list = token_list->next;
 		if (tmp->value)
 			free(tmp->value);
 		free(tmp);
-	}
+		i++;
+		}
 }

@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 13:19:51 by ibarbouc          #+#    #+#             */
-/*   Updated: 2025/07/14 00:43:29 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:28:58 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ int					extract_var_name(char *input, int start_index,
 int					is_valid_var_char(char c);
 
 // builtin
-void				exec_builtin(char **args, t_env *env_list, char *input);
+void				exec_builtin(t_ast_node *node, t_env *env_list, char *input, t_token *token, char *input_for_free);
 int					builtin_echo(char **args);
 int					builtin_env(t_env *env_list);
 int					builtin_pwd(void);
 void				ft_cd(char *path);
-void				builtin_exit(t_env *env_list, char **args, char *input);
+void				builtin_exit(t_env *env_list, t_ast_node *node, char *input, t_token *token, char *input_for_free);
 t_env				*builtin_unset(t_env *env, char *cmd);
 int					builtin_export(t_env *env_list, char **cmd);
 t_env				*find_env_node(t_env *env, char *name);

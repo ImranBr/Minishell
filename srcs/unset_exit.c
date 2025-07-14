@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:44:46 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/13 15:45:07 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:50:07 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	ft_valid_nbr(char *str)
 void	cleanup(t_env *env_list, char **args, char *input)
 {
 	free_list(env_list);
-	free_split(args);
+	if (args)
+		free_split(args);
 	free(input);
 	clear_history();
 }
@@ -61,26 +62,32 @@ void	handle_non_numeric_exit_arg(t_env *env_list, char **args, char *input)
 	exit(2);
 }
 
-void	builtin_exit(t_env *env_list, char **args, char *input)
+void	builtin_exit(t_env *env_list, t_ast_node *node, char *input, t_token *token, char *input_for_free)
 {
 	long	exit_code;
 
-	if (!args || !args[1])
-	{
-		cleanup(env_list, args, input);
+	if (!node->args || !node->args[1])
+	{	
+		free_ast(node);
+		free_list(env_list);
+		free_tokens(token);
+		free(input_for_free);
 		exit(0);
 	}
-	if (!ft_is_num(args[1]))
-		handle_non_numeric_exit_arg(env_list, args, input);
-	if (args[2])
+	if (!ft_is_num(node->args[1]))
+		handle_non_numeric_exit_arg(env_list, node->args, input);
+	if (node->args[2])
 	{
 		ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
 		return ;
 	}
-	exit_code = ft_valid_nbr(args[1]) % 256;
+	exit_code = ft_valid_nbr(node->args[1]) % 256;
 	if (exit_code < 0)
 		exit_code += 256;
-	cleanup(env_list, args, input);
+	free_ast(node);
+	free_list(env_list);
+	free_tokens(token);
+	free(input_for_free);	
 	exit(exit_code);
 }
 

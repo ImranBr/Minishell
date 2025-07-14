@@ -6,7 +6,7 @@
 /*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:43:57 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/14 00:38:24 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:53:41 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,11 @@ void	add_or_replace(t_env **env, char *cmd)
 	char	*value;
 	int		i;
 
-	static int j = 0;
-	j++;
-	printf("i = %d \n", j);
 	i = 0;
 	value = NULL;
 	while (cmd[i] && cmd[i] != '=')
 		i++;
 	name = ft_substr(cmd, 0, i);
-	printf("name ======== %s\n", name);
 	if (!name)
 		return ;
 	if (cmd[i] == '=')
@@ -53,7 +49,5 @@ void	add_or_replace(t_env **env, char *cmd)
 	}
 	else
 		add_env_node(env, name, value);
-	printf("name ========!!!!!!!!!!! %s\n", name);
 	free(name);
-
 }

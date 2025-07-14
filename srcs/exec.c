@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 19:15:42 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/14 17:16:28 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/14 20:55:47 by ibarbouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 
 int	save_stdout(void)
 {
-	int saved_fd = dup(STDOUT_FILENO);
+	int	saved_fd;
+
+	saved_fd = dup(STDOUT_FILENO);
 	if (saved_fd == -1)
 		perror("dup");
-	return saved_fd;
+	return (saved_fd);
 }
 
 void	restore_stdout(int saved_fd)
@@ -32,7 +34,7 @@ void	restore_stdout(int saved_fd)
 	close(saved_fd);
 }
 
-void free_in_child(t_env *env_list, t_ast_node *node, char *path)
+void	free_in_child(t_env *env_list, t_ast_node *node, char *path)
 {
 	free_list(env_list);
 	free_ast(node);
@@ -40,10 +42,10 @@ void free_in_child(t_env *env_list, t_ast_node *node, char *path)
 		free(path);
 }
 
-char **get_path(t_env *env_list)
+char	**get_path(t_env *env_list)
 {
-	char *path_name;
-	char **tab;
+	char	*path_name;
+	char	**tab;
 
 	path_name = "PATH";
 	tab = NULL;
@@ -60,11 +62,11 @@ char **get_path(t_env *env_list)
 	return (NULL);
 }
 
-char *get_cmd(t_env *env_list, char *s1)
+char	*get_cmd(t_env *env_list, char *s1)
 {
-	int i;
-	char **str;
-	char *pathname;
+	int		i;
+	char	**str;
+	char	*pathname;
 
 	i = 0;
 	if (!s1 || s1[0] == '\0')
@@ -89,24 +91,29 @@ char *get_cmd(t_env *env_list, char *s1)
 	return (free_split(str), perror(s1), NULL);
 }
 
-int is_builtin(char *cmd)
+int	is_builtin(char *cmd)
 {
-	return (ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "env") == 0 || ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "exit") == 0);
+	return (ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "echo") == 0
+		|| ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "env") == 0
+		|| ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0
+		|| ft_strcmp(cmd, "exit") == 0);
 }
 
-int needs_child_process(char *cmd)
+int	needs_child_process(char *cmd)
 {
-	return (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "env") == 0);
+	return (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "pwd") == 0
+		|| ft_strcmp(cmd, "env") == 0);
 }
 
-int execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token,
-				char *input)
+int	execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token,
+		char *input)
 {
-	pid_t pid_left;
-	pid_t pid_right;
-	pid_t pid_cmd;
-	int pipe_fd[2];
-	char *path;
+	pid_t	pid_left;
+	pid_t	pid_right;
+	pid_t	pid_cmd;
+	int		pipe_fd[2];
+	char	*path;
+	int		saved_stdout;
 
 	path = NULL;
 	if (node->type == NODE_PIPE)
@@ -159,7 +166,7 @@ int execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token,
 	}
 	else if (node->type == NODE_COMMAND)
 	{
-		int saved_stdout = -1;
+		saved_stdout = -1;
 		if ((!node->args || !node->args[0]) && node->redirections)
 		{
 			saved_stdout = save_stdout();
@@ -167,10 +174,10 @@ int execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token,
 			restore_stdout(saved_stdout);
 			return (0);
 		}
-
-		if (node->args && node->args[0] && is_builtin(node->args[0]) && !needs_child_process(node->args[0]))
+		if (node->args && node->args[0] && is_builtin(node->args[0])
+			&& !needs_child_process(node->args[0]))
 		{
-			exec_builtin(node->args, env_list, NULL);
+			exec_builtin(node, env_list, NULL, token, input);
 			return (0);
 		}
 		pid_cmd = fork();
@@ -184,13 +191,10 @@ int execute_ast(t_ast_node *node, char **envp, t_env *env_list, t_token *token,
 		if (pid_cmd == 0)
 		{
 			process_redirections(node->redirections);
-			// {
-			// 	perror("redirection");
-			// 	exit(EXIT_FAILURE);
-			// }
-			if (node->args && node->args[0] && is_builtin(node->args[0]) && needs_child_process(node->args[0]))
+			if (node->args && node->args[0] && is_builtin(node->args[0])
+				&& needs_child_process(node->args[0]))
 			{
-				exec_builtin(node->args, env_list, NULL);
+				exec_builtin(node, env_list, NULL, token, input);
 				free_in_child(env_list, node, path);
 				free_tokens(token);
 				free(input);
