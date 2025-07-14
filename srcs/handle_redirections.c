@@ -6,7 +6,7 @@
 /*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:59:41 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 21:54:33 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/14 17:09:23 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,41 +75,46 @@ void	process_redirect_in(t_ast_node *redirect_in_node)
 	close(fd_input);
 }
 
-/*void	process_redirect_out(t_ast_node *redirect_out_node)
-{
-	int	fd_output;
-
-	fd_output = open(redirect_out_node->filename, O_WRONLY | O_CREAT | O_TRUNC,
-			0644);
-	if (fd_output == -1)
-	{
-		perror("open");
-		exit(EXIT_FAILURE);
-	}
-	dup2(fd_output, 1);
-	// printf("redirect_out -> %s\n", redirect_out_node->filename);
-	close(fd_output);
-}*/
-int	process_redirect_out(t_ast_node *redirect_out_node)
+void	process_redirect_out(t_ast_node *redirect_out_node)
 {
 	int	fd_output;
 
 	fd_output = open(redirect_out_node->filename, O_WRONLY
-			| O_CREAT | O_TRUNC, 0644);
+			| O_CREAT | O_TRUNC,
+			0644);
 	if (fd_output == -1)
 	{
 		perror(redirect_out_node->filename);
-		return (-1);
+		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd_output, STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
 		close(fd_output);
-		return (-1);
+		exit(EXIT_FAILURE);
 	}
 	close(fd_output);
-	return (0);
 }
+// int	process_redirect_out(t_ast_node *redirect_out_node)
+// {
+// 	int	fd_output;
+
+// 	fd_output = open(redirect_out_node->filename, O_WRONLY
+// 			| O_CREAT | O_TRUNC, 0644);
+// 	if (fd_output == -1)
+// 	{
+// 		perror(redirect_out_node->filename);
+// 		return (-1);
+// 	}
+// 	if (dup2(fd_output, STDOUT_FILENO) == -1)
+// 	{
+// 		perror("dup2");
+// 		close(fd_output);
+// 		return (-1);
+// 	}
+// 	close(fd_output);
+// 	return (0);
+// }
 
 void	process_append(t_ast_node *append_node)
 {

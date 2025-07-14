@@ -6,7 +6,7 @@
 /*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 20:56:02 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 20:59:28 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/14 15:59:29 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	free_ast(t_ast_node *node)
 	}
 	if (node->filename)
 		free(node->filename);
+	if(node->redirections)
+		free_ast(node->redirections);
 	free_ast(node->left);
 	free_ast(node->right);
 	free(node);

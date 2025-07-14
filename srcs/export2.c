@@ -6,7 +6,7 @@
 /*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:44:07 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/11 23:44:08 by joudafke         ###   ########.fr       */
+/*   Updated: 2025/07/14 17:25:41 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,14 @@ char	**cpy_env_to_tab(t_env *env, int i, int count)
 	tmp = env;
 	while (tmp)
 	{
-		tmp_egal = ft_strjoin(tmp->name, "=");
-		tab[i] = ft_strjoin(tmp_egal, tmp->value);
-		free(tmp_egal);
+		if (tmp->value)
+		{
+			tmp_egal = ft_strjoin(tmp->name, "=");
+			tab[i] = ft_strjoin(tmp_egal, tmp->value);
+			free(tmp_egal);
+		}
+		else
+			tab[i] = ft_strdup(tmp->name);
 		i++;
 		tmp = tmp->next;
 	}

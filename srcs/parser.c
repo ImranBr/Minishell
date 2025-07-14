@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/23 17:33:48 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/13 15:37:43 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/14 16:35:09 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,12 @@ t_ast_node	*parse_command(t_token **token_list, t_ast_node *cmd)
 
 	if (!token_list || !*token_list)
 		return (NULL);
-	while (*token_list && (*token_list)->type != PIPE)
+	while (*token_list && (*token_list)->type != PIPE && (*token_list)->type != EOF_TOKEN)
 	{
 		if ((*token_list)->type == WORD)
 		{
 			if (!cmd)
 				cmd = create_ast_node(NODE_COMMAND);
-
 			char *tmp1 = ft_strdup((*token_list)->value);
 			add_args_to_cmd(cmd, tmp1);
 		}
@@ -72,12 +71,12 @@ t_ast_node	*parse_command(t_token **token_list, t_ast_node *cmd)
 		{
 			if (!cmd)
 				cmd = create_ast_node(NODE_COMMAND);
-
-			char *tmp2 = ft_strdup((*token_list)->value);
-			add_args_to_cmd(cmd, tmp2);
 			redir = create_redir_node(cmd, *token_list);
-			add_redir_to_cmd(cmd, redir);
-			*token_list = (*token_list)->next;
+			if (redir)
+			{
+				add_redir_to_cmd(cmd, redir);
+				*token_list = (*token_list)->next;
+			}
 		}
 		*token_list = (*token_list)->next;
 	}
@@ -121,5 +120,7 @@ t_ast_node	*parse_pipeline(t_token **token_list)
 		if (!left)
 			return (NULL);
 	}
+	if (*token_list && (*token_list)->type == EOF_TOKEN)
+		*token_list = (*token_list)->next;
 	return (left);
 }

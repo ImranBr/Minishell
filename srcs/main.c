@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibarbouc <ibarbouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: joudafke <joudafke@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 23:44:21 by joudafke          #+#    #+#             */
-/*   Updated: 2025/07/14 00:29:29 by ibarbouc         ###   ########.fr       */
+/*   Updated: 2025/07/14 17:27:09 by joudafke         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,21 @@ void	check_signal(int sig)
 	rl_redisplay();
 }
 
+char *readline_stderr(const char *prompt)
+{
+	int		saved_stdout;
+	int 	devnull;
+	char	*line;
+
+	saved_stdout = dup(STDOUT_FILENO);
+	devnull = open("/dev/null", O_WRONLY);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
+	line = readline(prompt);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdout);
+	close(devnull);
+	return line;
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -53,7 +68,7 @@ int	main(int ac, char **av, char **envp)
 		ast = NULL;
 		signal(SIGINT, check_signal);
 		signal(SIGQUIT, SIG_IGN);
-		input = readline("minishell : ");
+		input = readline_stderr("minishell : ");
 		if (!input)
 		{
 			free(input);
@@ -70,7 +85,6 @@ int	main(int ac, char **av, char **envp)
 		expanded = expand_variables(input, env_list, exit_status);
 		free(input);
 		input = expanded;
-		printf("adr 1 = %p \n" , input);
 		// Tokenisation
 		tokens = tokenize(input, 0);
 		tokens_head = tokens;
@@ -90,8 +104,6 @@ int	main(int ac, char **av, char **envp)
 		// Exécution AST générale (non montrée)
 		free_ast(ast);
 		free_tokens(tokens_head);
-		printf("adr 2= %p\n", input);
-
 		free(input);
 	}
 	free(input);
